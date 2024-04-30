@@ -11,8 +11,8 @@ from nltk.sentiment.vader import SentimentIntensityAnalyzer
 # Function to load data
 def load_data():
     # Read the data files
-    amazon_data = pd.read_csv('../amazon_data.csv', names=['Brand', 'Date', 'Review'])
-    google_data = pd.read_csv('../google_data.csv', names=['Brand', 'Date', 'Review'])
+    amazon_data = pd.read_csv('amazon_data.csv', names=['Brand', 'Date', 'Review'])
+    google_data = pd.read_csv('google_data.csv', names=['Brand', 'Date', 'Review'])
 
     # Concatenate Amazon and Google data
     amazon_google_data = pd.concat([amazon_data, google_data], ignore_index=True)
