@@ -64,6 +64,10 @@ stock_analysis_data = load_data()
 # Perform sentiment analysis
 stock_analysis_data = perform_sentiment_analysis(stock_analysis_data)
 
+# Sort data by date in ascending order
+stock_analysis_data['Date'] = pd.to_datetime(stock_analysis_data['Date'])
+stock_analysis_data = stock_analysis_data.sort_values(by='Date')
+
 # Streamlit app
 def main():
     st.title('Stock Analysis Data App')
