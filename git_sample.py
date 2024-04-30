@@ -2,6 +2,9 @@ import pandas as pd
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 import streamlit as st
 
+import nltk
+nltk.download('vader_lexicon')
+
 # Read the CSV files
 amazon_data = pd.read_csv('../amazon_data.csv', names=['Brand', 'Date', 'Review'])
 google_data = pd.read_csv('../google_data.csv', names=['Brand', 'Date', 'Review'])
