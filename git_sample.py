@@ -87,6 +87,9 @@ def main():
         # Filter data for selected brand
         selected_brand_data = stock_analysis_data[stock_analysis_data['Brand'] == selected_brand]
 
+        # Disable the warning
+        st.set_option('deprecation.showPyplotGlobalUse', False)
+
         # Pie chart for sentiment analysis
         sentiment_counts = selected_brand_data['Sentiment'].value_counts()
         st.subheader(f"Sentiment Analysis for {selected_brand}")
@@ -95,9 +98,13 @@ def main():
         ax.axis('equal')
         st.pyplot(fig)
 
-        # Bar chart for stock value across dates
+        # Line graph for stock value across dates
         st.subheader(f"Stock Value for {selected_brand}")
-        sns.barplot(x='Date', y='Close', data=selected_brand_data)
+        plt.figure(figsize=(10, 6))
+        sns.lineplot(x='Date', y='Close', data=selected_brand_data)
+        plt.xlabel('Date')
+        plt.ylabel('Close Price')
+        plt.title(f'Stock Value for {selected_brand}')
         plt.xticks(rotation=45)
         st.pyplot()
 
