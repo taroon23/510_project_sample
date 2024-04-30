@@ -1,11 +1,12 @@
 import pandas as pd
-from nltk.sentiment.vader import SentimentIntensityAnalyzer
 import streamlit as st
 
 #pip install nltk
 
 import nltk
 nltk.download('vader_lexicon')
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
+
 
 # Read the CSV files
 amazon_data = pd.read_csv('../amazon_data.csv', names=['Brand', 'Date', 'Review'])
