@@ -9,8 +9,8 @@ from nltk.sentiment.vader import SentimentIntensityAnalyzer
 
 
 # Read the CSV files
-amazon_data = pd.read_csv('../amazon_data.csv', names=['Brand', 'Date', 'Review'])
-google_data = pd.read_csv('../google_data.csv', names=['Brand', 'Date', 'Review'])
+amazon_data = pd.read_csv('amazon_data.csv', names=['Brand', 'Date', 'Review'])
+google_data = pd.read_csv('google_data.csv', names=['Brand', 'Date', 'Review'])
 
 # Read stock data
 tickers = ['ADDYY', 'NKE', 'SKX', 'UAA', 'PUM.DE']
