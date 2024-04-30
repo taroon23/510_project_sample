@@ -2,6 +2,7 @@ import pandas as pd
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 import streamlit as st
 
+pip install nltk
 import nltk
 nltk.download('vader_lexicon')
 
