@@ -75,9 +75,9 @@ def main():
 
     if page == 'Start Page':
         st.header('Start Page')
-        st.write("Click the button below to navigate to the Analysis Page.")
-        if st.button("Go to Analysis Page"):
-            st.experimental_set_query_params(page='Analysis Page')
+        #st.write("Click the button below to navigate to the Analysis Page.")
+        #if st.button("Go to Analysis Page"):
+            #st.experimental_set_query_params(page='Analysis Page')
 
     elif page == 'Analysis Page':
         st.header('Analysis Page')
