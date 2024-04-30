@@ -1,12 +1,10 @@
 import pandas as pd
 import streamlit as st
-
-#pip install nltk
-
+import matplotlib.pyplot as plt
+import seaborn as sns
 import nltk
 nltk.download('vader_lexicon')
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
-
 
 # Function to load data
 def load_data():
@@ -71,17 +69,37 @@ def main():
     st.title('Stock Analysis Data App')
 
     # Page navigation
-    page = st.sidebar.radio("Navigate", ['Start Page', 'Analysis Page'])
+    page = st.sidebar.radio("Navigate", ['Start Page', 'Analysis Page', 'Brand Analysis Page'])
 
     if page == 'Start Page':
         st.header('Start Page')
-        #st.write("Click the button below to navigate to the Analysis Page.")
-        #if st.button("Go to Analysis Page"):
-            #st.experimental_set_query_params(page='Analysis Page')
 
     elif page == 'Analysis Page':
         st.header('Analysis Page')
         st.write(stock_analysis_data)
+
+    elif page == 'Brand Analysis Page':
+        st.header('Brand Analysis Page')
+
+        # Dropdown for selecting brand
+        selected_brand = st.selectbox("Select Brand", stock_analysis_data['Brand'].unique())
+
+        # Filter data for selected brand
+        selected_brand_data = stock_analysis_data[stock_analysis_data['Brand'] == selected_brand]
+
+        # Pie chart for sentiment analysis
+        sentiment_counts = selected_brand_data['Sentiment'].value_counts()
+        st.subheader(f"Sentiment Analysis for {selected_brand}")
+        fig, ax = plt.subplots()
+        ax.pie(sentiment_counts, labels=sentiment_counts.index, autopct='%1.1f%%', startangle=90)
+        ax.axis('equal')
+        st.pyplot(fig)
+
+        # Bar chart for stock value across dates
+        st.subheader(f"Stock Value for {selected_brand}")
+        sns.barplot(x='Date', y='Close', data=selected_brand_data)
+        plt.xticks(rotation=45)
+        st.pyplot()
 
 if __name__ == "__main__":
     main()
