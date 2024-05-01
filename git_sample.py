@@ -142,10 +142,18 @@ def generate_close_price_histogram(data):
 
 # Function to generate Correlation Heatmap
 def generate_correlation_heatmap(data):
+    # Drop non-numeric columns
+    numeric_data = data.select_dtypes(include=np.number)
+    
+    # Drop rows with missing values
+    numeric_data.dropna(inplace=True)
+    
+    # Generate correlation heatmap
     plt.figure(figsize=(10, 6))
-    sns.heatmap(data.corr(), annot=True, cmap='coolwarm', fmt=".2f")
+    sns.heatmap(numeric_data.corr(), annot=True, cmap='coolwarm', fmt=".2f")
     plt.title('Correlation Heatmap')
     st.pyplot()
+
 
 # Streamlit app
 def main():
