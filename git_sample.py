@@ -106,14 +106,16 @@ def main():
         # Dropdown for selecting brand
         selected_brand = st.selectbox("Select Brand", stock_analysis_data['Brand'].unique())
 
-        # Dropdown for selecting year
-        selected_year = st.selectbox("Select Year", ['All Years'] + list(stock_analysis_data['Date'].dt.year.unique()))
+        # Filter data for selected brand
+        selected_brand_data = stock_analysis_data[stock_analysis_data['Brand'] == selected_brand]
 
-        # Filter data for selected brand and year
-        if selected_year == 'All Years':
-            selected_brand_data = stock_analysis_data[stock_analysis_data['Brand'] == selected_brand]
-        else:
-            selected_brand_data = stock_analysis_data[(stock_analysis_data['Brand'] == selected_brand) & (stock_analysis_data['Date'].dt.year == selected_year)]
+        # Dropdown for selecting year
+        available_years = selected_brand_data['Date'].dt.year.unique()
+        selected_year = st.selectbox("Select Year", ['All Years'] + list(available_years))
+
+        # Filter data for selected year
+        if selected_year != 'All Years':
+            selected_brand_data = selected_brand_data[selected_brand_data['Date'].dt.year == selected_year]
 
         # Generate pie chart
         st.subheader(f"Sentiment Analysis for {selected_brand}")
