@@ -103,10 +103,30 @@ def generate_line_graph(data, selected_brand, selected_year):
     plt.xticks(rotation=45)
     # Set x-axis interval to months
     plt.gca().xaxis.set_major_locator(MonthLocator())
-    # Get the current figure and pass it to st.pyplot()   
     st.set_option('deprecation.showPyplotGlobalUse', False)
     #st.pyplot(fig)
     #fig = plt.gcf()
+
+# Function to generate Box Plot of Ratings by Brand
+def generate_box_plot(data):
+    plt.figure(figsize=(10, 6))
+    sns.boxplot(x='Brand', y='Ratings', data=data)
+    plt.xlabel('Brand')
+    plt.ylabel('Ratings')
+    plt.title('Box Plot of Ratings by Brand')
+    plt.xticks(rotation=45)
+    st.pyplot()
+
+# Function to generate Bar Plot of Average Price by Brand
+def generate_bar_plot(data):
+    plt.figure(figsize=(10, 6))
+    avg_price_by_brand = data.groupby('Brand')['Price'].mean().reset_index()
+    sns.barplot(x='Brand', y='Price', data=avg_price_by_brand)
+    plt.xlabel('Brand')
+    plt.ylabel('Average Price')
+    plt.title('Bar Plot of Average Price by Brand')
+    plt.xticks(rotation=45)
+    st.pyplot()
 
 # Streamlit app
 def main():
@@ -151,6 +171,18 @@ def main():
         st.subheader(f"Stock Value for {selected_brand} in {selected_year}")
         fig_lg = generate_line_graph(selected_stock_data, selected_brand, selected_year)
         st.pyplot(fig_lg)
+    
+    elif page == 'General Analysis Page':
+        st.header('General Analysis of all Brands')
+        st.write(stock_analysis_data)
+
+        # Generate Box Plot of Ratings by Brand
+        st.header('Box Plot of Ratings by Brand')
+        generate_box_plot(stock_analysis_data)
+
+        # Generate Bar Plot of Average Price by Brand
+        st.header('Bar Plot of Average Price by Brand')
+        generate_bar_plot(stock_analysis_data)
 
 if __name__ == "__main__":
     main()
