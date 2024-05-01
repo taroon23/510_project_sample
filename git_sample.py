@@ -131,6 +131,22 @@ def generate_line_plot_ratings(data, selected_brand, selected_year):
     plt.gca().xaxis.set_major_locator(MonthLocator())
     st.pyplot()
 
+# Function to generate Histogram of Close Price
+def generate_close_price_histogram(data):
+    plt.figure(figsize=(10, 6))
+    sns.histplot(data['Close'], bins=20, kde=True)
+    plt.xlabel('Close Price')
+    plt.ylabel('Frequency')
+    plt.title('Histogram of Close Price')
+    st.pyplot()
+
+# Function to generate Correlation Heatmap
+def generate_correlation_heatmap(data):
+    plt.figure(figsize=(10, 6))
+    sns.heatmap(data.corr(), annot=True, cmap='coolwarm', fmt=".2f")
+    plt.title('Correlation Heatmap')
+    st.pyplot()
+
 # Streamlit app
 def main():
     st.title('Stock Analysis Data App')
@@ -155,6 +171,14 @@ def main():
         # Generate Bar Plot of Average Price by Brand
         st.header('Bar Plot of Average Price by Brand')
         generate_bar_plot(stock_analysis_data)
+
+        # Generate Histogram of Close Price
+        st.header('Histogram of Close Price')
+        generate_close_price_histogram(stock_analysis_data)
+
+        # Generate Correlation Heatmap
+        st.header('Correlation Heatmap')
+        generate_correlation_heatmap(stock_analysis_data)
 
     elif page == 'Brand Analysis Page':
         st.header('Brand Analysis Page')
