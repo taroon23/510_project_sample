@@ -2,10 +2,10 @@ import pandas as pd
 import streamlit as st
 import matplotlib.pyplot as plt
 import seaborn as sns
-import numpy as np
 import nltk
 nltk.download('vader_lexicon')
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
+from matplotlib.dates import MonthLocator
 
 # Function to load data
 def load_data():
@@ -15,9 +15,6 @@ def load_data():
 
     # Concatenate Amazon and Google data
     amazon_google_data = pd.concat([amazon_data, google_data], ignore_index=True)
-    
-    
-    amazon_google_data['Date'] = pd.to_datetime(amazon_google_data['Date'])
 
     # Read the stock data
     tickers = ['ADDYY', 'NKE', 'SKX', 'UAA', 'PUM.DE']
@@ -28,8 +25,6 @@ def load_data():
         stock_df = pd.read_csv(query_string)
         stock_df['Ticker'] = ticker
         stock_df['Brand'] = brand_mapping[ticker]
-        # Convert 'Date' column to datetime
-        stock_df['Date'] = pd.to_datetime(stock_df['Date'])
         stock_dfs.append(stock_df)
     stock_data = pd.concat(stock_dfs, ignore_index=True)
 
@@ -67,8 +62,34 @@ def perform_sentiment_analysis(data):
 # Load the data
 stock_analysis_data, stock_data = load_data()
 
+stock_data['Date'] = pd.to_datetime(stock_data['Date'])
+
 # Perform sentiment analysis
 stock_analysis_data = perform_sentiment_analysis(stock_analysis_data)
+
+# Sort data by date in ascending order
+stock_analysis_data['Date'] = pd.to_datetime(stock_analysis_data['Date'])
+stock_analysis_data = stock_analysis_data.sort_values(by='Date')
+
+# Function to generate pie chart
+def generate_pie_chart(data, selected_brand):
+    sentiment_counts = data['Sentiment'].value_counts()
+    fig, ax = plt.subplots()
+    ax.pie(sentiment_counts, labels=sentiment_counts.index, autopct='%1.1f%%', startangle=90)
+    ax.axis('equal')
+    plt.title(f"Sentiment Analysis for {selected_brand}")
+    return fig
+
+# Function to generate line graph
+def generate_line_graph(data, selected_brand, selected_year):
+    plt.figure(figsize=(10, 6))
+    sns.lineplot(x='Date', y='Close', data=data)
+    plt.xlabel('Date')
+    plt.ylabel('Close Price')
+    plt.title(f'Stock Value for {selected_brand} in {selected_year}')
+    plt.xticks(rotation=45)
+    # Set x-axis interval to months
+    plt.gca().xaxis.set_major_locator(MonthLocator())
 
 # Streamlit app
 def main():
@@ -94,40 +115,25 @@ def main():
         selected_brand_data = stock_analysis_data[stock_analysis_data['Brand'] == selected_brand]
 
         # Dropdown for selecting year
-        years = selected_brand_data['Date'].dt.year.unique()
-        years = np.append('All', years)
-        selected_year = st.selectbox("Select Year", years)
+        available_years = selected_brand_data['Date'].dt.year.unique()
+        selected_year = st.selectbox("Select Year", ['All Years'] + list(available_years))
 
         # Filter data for selected year
-        if selected_year != 'All':
+        if selected_year != 'All Years':
             selected_brand_data = selected_brand_data[selected_brand_data['Date'].dt.year == selected_year]
+            selected_stock_data = stock_data[(stock_data['Brand'] == selected_brand) & (stock_data['Date'].dt.year == selected_year)]
+        else:
+            selected_stock_data = stock_data[stock_data['Brand'] == selected_brand] 
 
-        # Disable the warning
-        st.set_option('deprecation.showPyplotGlobalUse', False)
+        # Generate pie chart
+        st.subheader(f"Sentiment Analysis for {selected_brand}")
+        fig_pie = generate_pie_chart(selected_brand_data, selected_brand)
+        st.pyplot(fig_pie)
 
-        # Display pie chart and line graph side by side
-        col1, col2 = st.columns([1, 1])
-
-        # Pie chart for sentiment analysis
-        with col1:
-            sentiment_counts = selected_brand_data['Sentiment'].value_counts()
-            fig, ax = plt.subplots()
-            ax.pie(sentiment_counts, labels=sentiment_counts.index, autopct='%1.1f%%', startangle=90)
-            ax.axis('equal')
-            st.subheader(f"Sentiment Analysis for {selected_brand}")
-            st.pyplot(fig)
-
-        # Line graph for stock value across dates
-        with col2:
-            if selected_year != 'All':
-                selected_stock_data = stock_data[(stock_data['Brand'] == selected_brand) & (stock_data['Date'].dt.year == selected_year)]
-            else:
-                selected_stock_data = stock_data[stock_data['Brand'] == selected_brand]
-            selected_stock_data = selected_stock_data.sort_values(by='Date')
-            fig, ax = plt.subplots()
-            sns.lineplot(data=selected_stock_data, x='Date', y='Close')
-            st.subheader(f"Stock Value for {selected_brand}")
-            st.pyplot(fig)
+        # Generate line graph
+        st.subheader(f"Stock Value for {selected_brand} in {selected_year}")
+        generate_line_graph(selected_stock_data, selected_brand, selected_year)
+        st.pyplot()
 
 if __name__ == "__main__":
     main()
