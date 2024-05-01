@@ -166,8 +166,10 @@ def main():
         selected_brand_data = stock_analysis_data[stock_analysis_data['Brand'] == selected_brand]
 
         # Dropdown for selecting year
-        available_years = selected_brand_data['Date'].dt.year.unique()
-        selected_year = st.selectbox("Select Year", ['All Years'] + list(available_years))
+        # available_years = selected_brand_data['Date'].dt.year.unique()
+        available_years = [2023,2024]
+        #selected_year = st.selectbox("Select Year", ['All Years'] + list(available_years))
+        selected_year = st.selectbox("Select Year", available_years)
 
         # Filter data for selected year
         if selected_year != 'All Years':
