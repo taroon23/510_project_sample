@@ -5,6 +5,7 @@ import seaborn as sns
 import nltk
 nltk.download('vader_lexicon')
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
+from matplotlib.dates import MonthLocator
 
 # Function to load data
 def load_data():
@@ -85,6 +86,8 @@ def generate_line_graph(data, selected_brand, selected_year):
     plt.ylabel('Close Price')
     plt.title(f'Stock Value for {selected_brand} in {selected_year}')
     plt.xticks(rotation=45)
+    # Set x-axis interval to months
+    plt.gca().xaxis.set_major_locator(MonthLocator())
 
 # Streamlit app
 def main():
