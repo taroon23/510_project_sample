@@ -83,24 +83,15 @@ stock_analysis_data.dropna(inplace=True)
 
 # Function to generate pie chart
 def generate_pie_chart(data, selected_brand):
-    '''
-    sentiment_counts = data['Sentiment'].value_counts()
-    fig, ax = plt.subplots()
-    ax.pie(sentiment_counts, labels=sentiment_counts.index, autopct='%1.1f%%', startangle=90)
-    ax.axis('equal')
-    plt.title(f"Sentiment Analysis for {selected_brand}")
-    return fig
-    '''
     sentiment_counts = data['Sentiment'].value_counts()
     fig, ax = plt.subplots()
     ax.pie(sentiment_counts, labels=sentiment_counts.index, autopct='%1.1f%%', startangle=90)
     centre_circle = plt.Circle((0,0),0.70,fc='white')
-    fig = plt.gcf()
     fig.gca().add_artist(centre_circle)
     ax.axis('equal')
     plt.title(f"Sentiment Analysis for {selected_brand}")
     plt.tight_layout()
-    plt.show()
+    return fig
 
 # Function to generate line graph
 def generate_line_graph(data, selected_brand, selected_year):
