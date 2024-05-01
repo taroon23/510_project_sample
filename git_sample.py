@@ -103,10 +103,10 @@ def generate_line_graph(data, selected_brand, selected_year):
     plt.xticks(rotation=45)
     # Set x-axis interval to months
     plt.gca().xaxis.set_major_locator(MonthLocator())
-    # Get the current figure and pass it to st.pyplot()
-    fig = plt.gcf()
+    # Get the current figure and pass it to st.pyplot()   
     st.set_option('deprecation.showPyplotGlobalUse', False)
-    st.pyplot(fig)
+    #st.pyplot(fig)
+    #fig = plt.gcf()
 
 # Streamlit app
 def main():
