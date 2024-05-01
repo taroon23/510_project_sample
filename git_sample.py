@@ -93,6 +93,20 @@ def generate_pie_chart(data, selected_brand):
     plt.tight_layout()
     return fig
 
+'''
+# Function to generate line graph
+def generate_line_graph(data, selected_brand, selected_year):
+    
+    plt.figure(figsize=(10, 6))
+    sns.lineplot(x='Date', y='Close', data=data)
+    plt.xlabel('Date')
+    plt.ylabel('Close Price')
+    plt.title(f'Stock Value for {selected_brand} in {selected_year}')
+    plt.xticks(rotation=45)
+    # Set x-axis interval to months
+    plt.gca().xaxis.set_major_locator(MonthLocator())
+'''
+
 # Function to generate line graph
 def generate_line_graph(data, selected_brand, selected_year):
     plt.figure(figsize=(10, 6))
@@ -103,6 +117,9 @@ def generate_line_graph(data, selected_brand, selected_year):
     plt.xticks(rotation=45)
     # Set x-axis interval to months
     plt.gca().xaxis.set_major_locator(MonthLocator())
+    # Get the current figure and pass it to st.pyplot()
+    fig = plt.gcf()
+    st.pyplot(fig)
 
 # Streamlit app
 def main():
