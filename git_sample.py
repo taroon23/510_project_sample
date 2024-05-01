@@ -15,6 +15,9 @@ def load_data():
 
     # Concatenate Amazon and Google data
     amazon_google_data = pd.concat([amazon_data, google_data], ignore_index=True)
+    
+    
+    amazon_google_data['Date'] = pd.to_datetime(amazon_google_data['Date'])
 
     # Read the stock data
     tickers = ['ADDYY', 'NKE', 'SKX', 'UAA', 'PUM.DE']
