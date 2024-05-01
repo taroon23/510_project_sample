@@ -94,23 +94,28 @@ def main():
         # Disable the warning
         st.set_option('deprecation.showPyplotGlobalUse', False)
 
+        # Create two columns layout
+        col1, col2 = st.columns([1, 2])
+
         # Pie chart for sentiment analysis
-        sentiment_counts = selected_brand_data['Sentiment'].value_counts()
-        st.subheader(f"Sentiment Analysis for {selected_brand}")
-        fig, ax = plt.subplots()
-        ax.pie(sentiment_counts, labels=sentiment_counts.index, autopct='%1.1f%%', startangle=90)
-        ax.axis('equal')
-        st.pyplot(fig)
+        with col1:
+            sentiment_counts = selected_brand_data['Sentiment'].value_counts()
+            st.subheader(f"Sentiment Analysis for {selected_brand}")
+            fig, ax = plt.subplots()
+            ax.pie(sentiment_counts, labels=sentiment_counts.index, autopct='%1.1f%%', startangle=90)
+            ax.axis('equal')
+            st.pyplot(fig)
 
         # Line graph for stock value across dates
-        st.subheader(f"Stock Value for {selected_brand}")
-        plt.figure(figsize=(10, 6))
-        sns.lineplot(x='Date', y='Close', data=selected_brand_data)
-        plt.xlabel('Date')
-        plt.ylabel('Close Price')
-        plt.title(f'Stock Value for {selected_brand}')
-        plt.xticks(rotation=45)
-        st.pyplot()
+        with col2:
+            st.subheader(f"Stock Value for {selected_brand}")
+            plt.figure(figsize=(10, 6))
+            sns.lineplot(x='Date', y='Close', data=selected_brand_data)
+            plt.xlabel('Date')
+            plt.ylabel('Close Price')
+            plt.title(f'Stock Value for {selected_brand}')
+            plt.xticks(rotation=45)
+            st.pyplot()
 
 if __name__ == "__main__":
     main()
