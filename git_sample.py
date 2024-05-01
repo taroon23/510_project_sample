@@ -68,6 +68,24 @@ stock_analysis_data = perform_sentiment_analysis(stock_analysis_data)
 stock_analysis_data['Date'] = pd.to_datetime(stock_analysis_data['Date'])
 stock_analysis_data = stock_analysis_data.sort_values(by='Date')
 
+# Function to generate pie chart
+def generate_pie_chart(data, selected_brand):
+    sentiment_counts = data['Sentiment'].value_counts()
+    fig, ax = plt.subplots()
+    ax.pie(sentiment_counts, labels=sentiment_counts.index, autopct='%1.1f%%', startangle=90)
+    ax.axis('equal')
+    plt.title(f"Sentiment Analysis for {selected_brand}")
+    return fig
+
+# Function to generate line graph
+def generate_line_graph(data, selected_brand):
+    plt.figure(figsize=(10, 6))
+    sns.lineplot(x='Date', y='Close', data=data)
+    plt.xlabel('Date')
+    plt.ylabel('Close Price')
+    plt.title(f'Stock Value for {selected_brand}')
+    plt.xticks(rotation=45)
+
 # Streamlit app
 def main():
     st.title('Stock Analysis Data App')
@@ -88,34 +106,24 @@ def main():
         # Dropdown for selecting brand
         selected_brand = st.selectbox("Select Brand", stock_analysis_data['Brand'].unique())
 
-        # Filter data for selected brand
-        selected_brand_data = stock_analysis_data[stock_analysis_data['Brand'] == selected_brand]
+        # Dropdown for selecting year
+        selected_year = st.selectbox("Select Year", ['All Years'] + list(stock_analysis_data['Date'].dt.year.unique()))
 
-        # Disable the warning
-        st.set_option('deprecation.showPyplotGlobalUse', False)
+        # Filter data for selected brand and year
+        if selected_year == 'All Years':
+            selected_brand_data = stock_analysis_data[stock_analysis_data['Brand'] == selected_brand]
+        else:
+            selected_brand_data = stock_analysis_data[(stock_analysis_data['Brand'] == selected_brand) & (stock_analysis_data['Date'].dt.year == selected_year)]
 
-        # Create two columns layout
-        col1, col2 = st.columns([1, 2])
+        # Generate pie chart
+        st.subheader(f"Sentiment Analysis for {selected_brand}")
+        fig_pie = generate_pie_chart(selected_brand_data, selected_brand)
+        st.pyplot(fig_pie)
 
-        # Pie chart for sentiment analysis
-        with col1:
-            sentiment_counts = selected_brand_data['Sentiment'].value_counts()
-            st.subheader(f"Sentiment Analysis for {selected_brand}")
-            fig, ax = plt.subplots()
-            ax.pie(sentiment_counts, labels=sentiment_counts.index, autopct='%1.1f%%', startangle=90)
-            ax.axis('equal')
-            st.pyplot(fig)
-
-        # Line graph for stock value across dates
-        with col2:
-            st.subheader(f"Stock Value for {selected_brand}")
-            plt.figure(figsize=(10, 6))
-            sns.lineplot(x='Date', y='Close', data=selected_brand_data)
-            plt.xlabel('Date')
-            plt.ylabel('Close Price')
-            plt.title(f'Stock Value for {selected_brand}')
-            plt.xticks(rotation=45)
-            st.pyplot()
+        # Generate line graph
+        st.subheader(f"Stock Value for {selected_brand}")
+        generate_line_graph(selected_brand_data, selected_brand)
+        st.pyplot()
 
 if __name__ == "__main__":
     main()
