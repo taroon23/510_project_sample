@@ -24,17 +24,7 @@ def load_data():
     # Concatenate Amazon and Google data
     amazon_google_data = pd.concat([amazon_data, google_data], ignore_index=True)
 
-    # Read the stock data
-    tickers = ['ADDYY', 'NKE', 'SKX', 'UAA', 'PUM.DE']
-    brand_mapping = {'ADDYY': 'Adidas', 'NKE': 'Nike', 'SKX': 'Skechers', 'UAA': 'Under Armour', 'PUM.DE': 'Puma'}
-    stock_dfs = []
-    for ticker in tickers:
-        query_string = f"https://query1.finance.yahoo.com/v7/finance/download/{ticker}?period1=1464739200&period2=1714351190&interval=1d&events=history&includeAdjustedClose=true"
-        stock_df = pd.read_csv(query_string)
-        stock_df['Ticker'] = ticker
-        stock_df['Brand'] = brand_mapping[ticker]
-        stock_dfs.append(stock_df)
-    stock_data = pd.concat(stock_dfs, ignore_index=True)
+    stock_data = pd.read_csv('stock_data.csv')
 
     # Merge stock data with review data
     combined_data = pd.merge(amazon_google_data, stock_data[['Date', 'Close', 'Brand']], on=['Date', 'Brand'], how='left')
