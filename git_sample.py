@@ -9,9 +9,17 @@ from matplotlib.dates import MonthLocator
 
 # Function to load data
 def load_data():
+    
     # Read the data files
-    amazon_data = pd.read_csv('amazon_data.csv', names=['Brand', 'Date', 'Review'])
-    google_data = pd.read_csv('google_data.csv', names=['Brand', 'Date', 'Review'])
+    amazon_data = pd.read_csv('amazon_data123.csv', names=['Brand', 'Shoe_ID', 'Price', 'Date', 'Ratings', 'Review'])
+    
+    # Adding '10' before every value in the 'Shoe_ID' column
+    amazon_data['Shoe_ID'] = '10' + amazon_data['Shoe_ID'].astype(str)
+
+    google_data = pd.read_csv('google_data321.csv', names=['Brand', 'Shoe_ID', 'Price', 'Date', 'Ratings', 'Review'])
+
+    # Adding '10' before every value in the 'Shoe_ID' column
+    google_data['Shoe_ID'] = '20' + google_data['Shoe_ID'].astype(str)
 
     # Concatenate Amazon and Google data
     amazon_google_data = pd.concat([amazon_data, google_data], ignore_index=True)
@@ -70,6 +78,8 @@ stock_analysis_data = perform_sentiment_analysis(stock_analysis_data)
 # Sort data by date in ascending order
 stock_analysis_data['Date'] = pd.to_datetime(stock_analysis_data['Date'])
 stock_analysis_data = stock_analysis_data.sort_values(by='Date')
+
+stock_analysis_data.dropna(inplace=True)
 
 # Function to generate pie chart
 def generate_pie_chart(data, selected_brand):
