@@ -24,7 +24,9 @@ def load_data():
         query_string = f"https://query1.finance.yahoo.com/v7/finance/download/{ticker}?period1=1464739200&period2=1714351190&interval=1d&events=history&includeAdjustedClose=true"
         stock_df = pd.read_csv(query_string)
         stock_df['Ticker'] = ticker
-        stock_df['Brand'] = brand_mapping[ticker]        
+        stock_df['Brand'] = brand_mapping[ticker]
+        # Convert 'Date' column to datetime
+        stock_df['Date'] = pd.to_datetime(stock_df['Date'])
         stock_dfs.append(stock_df)
     stock_data = pd.concat(stock_dfs, ignore_index=True)
 
@@ -61,9 +63,6 @@ def perform_sentiment_analysis(data):
 
 # Load the data
 stock_analysis_data, stock_data = load_data()
-
-# Convert 'Date' column to datetime
-stock_data['Date'] = pd.to_datetime(stock_data['Date'])
 
 # Perform sentiment analysis
 stock_analysis_data = perform_sentiment_analysis(stock_analysis_data)
