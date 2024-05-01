@@ -114,6 +114,7 @@ def main():
     
     elif page == 'Overall Analysis Page':
         st.header('Overall Analysis Page')
+        st.write(stock_analysis_data)
 
     elif page == 'Brand Analysis Page':
         st.header('Brand Analysis Page')
