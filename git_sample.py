@@ -108,8 +108,6 @@ def generate_line_graph(data, selected_brand, selected_year):
     #st.pyplot(fig)
     #fig = plt.gcf()
 
-
-
 # Streamlit app
 def main():
     st.title('Stock Analysis Data App')
@@ -153,10 +151,6 @@ def main():
         st.subheader(f"Stock Value for {selected_brand} in {selected_year}")
         fig_lg = generate_line_graph(selected_stock_data, selected_brand, selected_year)
         st.pyplot(fig_lg)
-    
-    elif page == 'General Analysis Page':
-        st.header('General Analysis of all Brands')
-        st.write(stock_analysis_data)
 
 if __name__ == "__main__":
     main()
