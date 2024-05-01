@@ -151,6 +151,9 @@ def main():
         st.subheader(f"Stock Value for {selected_brand} in {selected_year}")
         fig_lg = generate_line_graph(selected_stock_data, selected_brand, selected_year)
         st.pyplot(fig_lg)
-
+    
+    elif page == 'Overall Analysis Page':
+        st.header('Overall Analysis of all Brands')
+        
 if __name__ == "__main__":
     main()
