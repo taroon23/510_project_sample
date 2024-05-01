@@ -33,7 +33,7 @@ def load_data():
     # Drop rows with missing values in the 'Close' column
     stock_analysis_data = combined_data.dropna(subset=['Close'])
 
-    return stock_analysis_data
+    return stock_analysis_data, stock_data
 
 # Function to perform sentiment analysis
 def perform_sentiment_analysis(data):
@@ -59,7 +59,7 @@ def perform_sentiment_analysis(data):
     return data
 
 # Load the data
-stock_analysis_data = load_data()
+stock_analysis_data, stock_data = load_data()
 
 # Perform sentiment analysis
 stock_analysis_data = perform_sentiment_analysis(stock_analysis_data)
@@ -78,12 +78,12 @@ def generate_pie_chart(data, selected_brand):
     return fig
 
 # Function to generate line graph
-def generate_line_graph(data, selected_brand):
+def generate_line_graph(data, selected_brand, selected_year):
     plt.figure(figsize=(10, 6))
     sns.lineplot(x='Date', y='Close', data=data)
     plt.xlabel('Date')
     plt.ylabel('Close Price')
-    plt.title(f'Stock Value for {selected_brand}')
+    plt.title(f'Stock Value for {selected_brand} in {selected_year}')
     plt.xticks(rotation=45)
 
 # Streamlit app
@@ -123,8 +123,8 @@ def main():
         st.pyplot(fig_pie)
 
         # Generate line graph
-        st.subheader(f"Stock Value for {selected_brand}")
-        generate_line_graph(selected_brand_data, selected_brand)
+        st.subheader(f"Stock Value for {selected_brand} in {selected_year}")
+        generate_line_graph(stock_data[stock_data['Brand'] == selected_brand], selected_brand, selected_year)
         st.pyplot()
 
 if __name__ == "__main__":
