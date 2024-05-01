@@ -62,6 +62,8 @@ def perform_sentiment_analysis(data):
 # Load the data
 stock_analysis_data, stock_data = load_data()
 
+stock_data['Date'] = pd.to_datetime(stock_data['Date'])
+
 # Perform sentiment analysis
 stock_analysis_data = perform_sentiment_analysis(stock_analysis_data)
 
@@ -121,7 +123,7 @@ def main():
             selected_brand_data = selected_brand_data[selected_brand_data['Date'].dt.year == selected_year]
             selected_stock_data = stock_data[(stock_data['Brand'] == selected_brand) & (stock_data['Date'].dt.year == selected_year)]
         else:
-            selected_stock_data = stock_data[stock_data['Brand'] == selected_brand]
+            selected_stock_data = stock_data[stock_data['Brand'] == selected_brand] 
 
         # Generate pie chart
         st.subheader(f"Sentiment Analysis for {selected_brand}")
