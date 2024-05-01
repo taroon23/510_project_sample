@@ -119,6 +119,9 @@ def main():
         # Filter data for selected year
         if selected_year != 'All Years':
             selected_brand_data = selected_brand_data[selected_brand_data['Date'].dt.year == selected_year]
+            selected_stock_data = stock_data[(stock_data['Brand'] == selected_brand) & (stock_data['Date'].dt.year == selected_year)]
+        else:
+            selected_stock_data = stock_data[stock_data['Brand'] == selected_brand]
 
         # Generate pie chart
         st.subheader(f"Sentiment Analysis for {selected_brand}")
@@ -127,7 +130,7 @@ def main():
 
         # Generate line graph
         st.subheader(f"Stock Value for {selected_brand} in {selected_year}")
-        generate_line_graph(stock_data[stock_data['Brand'] == selected_brand], selected_brand, selected_year)
+        generate_line_graph(selected_stock_data, selected_brand, selected_year)
         st.pyplot()
 
 if __name__ == "__main__":
