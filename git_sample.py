@@ -119,6 +119,18 @@ def generate_bar_plot(data):
     plt.xticks(rotation=45)
     st.pyplot()
 
+# Function to generate line graph of Ratings Over Time
+def generate_line_plot_ratings(data, selected_brand, selected_year):
+    plt.figure(figsize=(10, 6))
+    sns.lineplot(x='Date', y='Ratings', data=data)
+    plt.xlabel('Date')
+    plt.ylabel('Ratings')
+    plt.title(f'Ratings Over Time for {selected_brand} in {selected_year}')
+    plt.xticks(rotation=45)
+    # Set x-axis interval to months
+    plt.gca().xaxis.set_major_locator(MonthLocator())
+    st.pyplot()
+
 # Streamlit app
 def main():
     st.title('Stock Analysis Data App')
@@ -174,5 +186,9 @@ def main():
         fig_lg = generate_line_graph(selected_stock_data, selected_brand, selected_year)
         st.pyplot(fig_lg)
         
+        # Generate line plot of Ratings Over Time
+        st.subheader(f"Ratings Over Time for {selected_brand} in {selected_year}")
+        generate_line_plot_ratings(selected_brand_data, selected_brand, selected_year)
+
 if __name__ == "__main__":
     main()
