@@ -149,9 +149,8 @@ def main():
 
         # Generate pie chart
         st.subheader(f"Sentiment Analysis for {selected_brand}")
-        #fig_pie = generate_pie_chart(selected_brand_data, selected_brand)
-        #st.pyplot(fig_pie)
-        generate_pie_chart(selected_brand_data, selected_brand)
+        fig_pie = generate_pie_chart(selected_brand_data, selected_brand)
+        st.pyplot(fig_pie)       
 
         # Generate line graph
         st.subheader(f"Stock Value for {selected_brand} in {selected_year}")
