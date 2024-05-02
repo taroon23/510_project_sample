@@ -161,7 +161,7 @@ def main():
     st.title('Stock Analysis Data App')
 
     # Page navigation
-    page = st.sidebar.radio("Navigate", ['Start Page', 'Analysis Page', 'Overall Analysis Page', 'Brand Analysis Page'])
+    page = st.sidebar.radio("Navigate", ['Main', 'Analysis Page', 'Overall Analysis Page', 'Brand Analysis Page'])
 
     if page == 'Main':
         st.header('Main')
