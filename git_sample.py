@@ -155,6 +155,8 @@ def generate_correlation_heatmap(data):
     plt.title('Correlation Heatmap')
     st.pyplot()
 
+'''
+
 # Function to generate dual line graph
 def generate_dual_line_graph(data, selected_brand, selected_year):
     plt.figure(figsize=(10, 6))
@@ -175,6 +177,30 @@ def generate_dual_line_graph(data, selected_brand, selected_year):
     plt.legend()
     st.pyplot()
 
+'''
+
+def generate_dual_line_graph_rescaled(data, selected_brand, selected_year):
+    plt.figure(figsize=(10, 6))
+    
+    # Filter data for the selected brand and year
+    selected_data = data[(data['Brand'] == selected_brand) & (data['Date'].dt.year == selected_year)]
+    
+    # Rescale ratings to match the range of close prices
+    scaler = MinMaxScaler(feature_range=(selected_data['Close'].min(), selected_data['Close'].max()))
+    selected_data['Scaled_Ratings'] = scaler.fit_transform(selected_data['Ratings'].values.reshape(-1, 1))
+    
+    # Plot rescaled ratings
+    sns.lineplot(x='Date', y='Scaled_Ratings', data=selected_data, label='Scaled Ratings', color='green')
+    
+    # Plot close price
+    sns.lineplot(x='Date', y='Close', data=selected_data, label='Close Price', color='red')
+    
+    plt.xlabel('Date')
+    plt.ylabel('Value')
+    plt.title(f'Rescaled Ratings vs Close Price for {selected_brand} in {selected_year}')
+    plt.xticks(rotation=45)
+    plt.legend()
+    st.pyplot()
 
 # Streamlit app
 def main():
