@@ -98,6 +98,22 @@ adidas_merged_data = pd.merge(adidas_stock_data, adidas_sales_daywise, on='Date'
 adidas_stock_analysis_data = adidas_merged_data[['Date', 'Units Sold', 'Total Sales', 'Close', 'Volume']]
 adidas_stock_analysis_data = adidas_stock_analysis_data.rename(columns={'Units Sold_y': 'Units Sold', 'Total Sales_y': 'Total Sales', 'Volume': 'Stock Sold'})
 
+# Function to get the brand logo
+def get_brand_logo(selected_brand):
+    # Dictionary mapping brands to their logos
+    brand_logos = {
+        'Adidas': 'adidas_logo.png',
+        'Nike': 'nike_logo.png',
+        'Skechers': 'skechers_logo.png',
+        'Under Armour': 'under_armour_logo.png',
+        'Puma': 'puma_logo.png'
+    }
+    
+    # Check if the selected brand exists in the dictionary
+    if selected_brand in brand_logos:
+        # Return the path to the logo image
+        return brand_logos[selected_brand]
+
 
 # Function to generate pie chart
 def generate_pie_chart(data, selected_brand):
@@ -291,6 +307,18 @@ def main():
         else:
             selected_stock_data = stock_data[stock_data['Brand'] == selected_brand] 
 
+        # Display brand logo
+        st.image(get_brand_logo(selected_brand))
+
+        # Calculate average price and ratings
+        avg_price = selected_brand_data['Price'].mean()
+        avg_ratings = selected_brand_data['Ratings'].mean()
+
+        # Display average price and ratings
+        st.write(f"Avg Price of Shoe: {avg_price:.2f}")
+        st.write(f"Avg Ratings: {avg_ratings:.2f}")
+
+
         # Generate pie chart
         st.subheader(f"Sentiment Analysis for {selected_brand}")
         fig_pie = generate_pie_chart(selected_brand_data, selected_brand)
@@ -306,7 +334,7 @@ def main():
         generate_line_plot_ratings(selected_brand_data, selected_brand, selected_year)
 
         # Generate dual line graph
-        st.subheader(f"Shoe Price vs Close Price for {selected_brand} in {selected_year}")
+        st.subheader(f"Ratings vs Close Price for {selected_brand} in {selected_year}")
         generate_dual_line_graph_rescaled(selected_brand_data, selected_brand, selected_year)
 
 if __name__ == "__main__":
