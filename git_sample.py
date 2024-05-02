@@ -163,7 +163,7 @@ def generate_dual_line_graph(data, selected_brand, selected_year):
     selected_data = data[(data['Brand'] == selected_brand) & (data['Date'].dt.year == selected_year)]
     
     # Plot shoe price
-    sns.lineplot(x='Date', y='Price', data=selected_data, label='Shoe Price', color='blue')
+    sns.lineplot(x='Date', y='Ratings', data=selected_data, label='Ratings', color='blue')
     
     # Plot close price
     sns.lineplot(x='Date', y='Close', data=selected_data, label='Close Price', color='red')
@@ -175,7 +175,7 @@ def generate_dual_line_graph(data, selected_brand, selected_year):
     plt.legend()
     st.pyplot()
 
-    
+
 # Streamlit app
 def main():
     st.title('Stock Analysis Data App')
