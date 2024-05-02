@@ -102,11 +102,11 @@ adidas_stock_analysis_data = adidas_stock_analysis_data.rename(columns={'Units S
 def get_brand_logo(selected_brand):
     # Dictionary mapping brands to their logos
     brand_logos = {
-        'Adidas': 'adidas_logo.png',
-        'Nike': 'nike_logo.png',
-        'Skechers': 'skechers_logo.png',
-        'Under Armour': 'under_armour_logo.png',
-        'Puma': 'puma_logo.png'
+        'Adidas': 'Adidas_logo.png',
+        'Nike': 'Nike_logo.png',
+        'Skechers': 'Skechers_logo.png',
+        'Under Armour': 'Under Armour_logo.png',
+        'Puma': 'Puma_logo.png'
     }
     
     # Check if the selected brand exists in the dictionary
