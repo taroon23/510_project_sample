@@ -1,4 +1,4 @@
 nltk
 matplotlib
 seaborn
-sklearn.preprocessing
+scikit-learn
