@@ -168,7 +168,35 @@ def main():
 
     elif page == 'Analysis Page':
         st.header('Analysis Page')
-        st.write(stock_analysis_data)
+        
+        # Overall Analysis Page
+        st.subheader('Overall Analysis Page:')
+        st.markdown("""
+        - **Box Plot of Ratings by Brand:** Shows the distribution of ratings across different brands. It helps identify variability and central tendency in customer ratings.
+        - **Bar Plot of Average Price by Brand:** Provides insight into the average price of shoes for each brand, allowing for easy comparison.
+        - **Histogram of Close Price:** Visualizes the distribution of close prices across all shoes, giving an overview of price spread and frequency.
+        - **Correlation Heatmap:** Illustrates correlations between numerical variables like close price, ratings, and price, aiding in identifying relationships.
+        """)
+
+        # Conclusions for Overall Analysis Page
+        st.subheader('Conclusions:')
+        st.write("""
+        Through the overall analysis, users can understand the distribution of ratings, average prices, and close prices across brands, as well as explore correlations between different numerical variables. These insights help in identifying market trends, customer preferences, and potential areas for further investigation.
+        """)
+
+        # Explanation of the Brand Analysis Page
+        st.subheader('Brand Analysis Page:')
+        st.markdown("""
+        - **Sentiment Analysis Pie Chart:** Represents the distribution of sentiment labels (positive, negative, neutral) based on customer reviews for the selected brand.
+        - **Stock Value Line Graph:** Shows the trend of close prices for the selected brand over the chosen year, allowing for tracking of stock performance.
+        - **Ratings Over Time Line Plot:** Illustrates changes in ratings for the selected brand over the selected year, helping identify customer satisfaction trends.
+        """)
+
+        # Conclusions for Brand Analysis Page
+        st.subheader('Conclusions:')
+        st.write("""
+        The brand analysis page provides focused insights into a specific brand's customer sentiment, stock performance, and ratings trends over time. Users can use these insights to assess brand competitiveness, customer satisfaction, and market positioning.
+        """)
     
     elif page == 'Overall Analysis Page':
         st.header('Overall Analysis of all brands')
