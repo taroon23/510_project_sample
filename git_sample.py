@@ -7,6 +7,7 @@ import nltk
 nltk.download('vader_lexicon')
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from matplotlib.dates import MonthLocator
+from sklearn.preprocessing import MinMaxScaler
 
 # Function to load data
 def load_data():
