@@ -303,7 +303,7 @@ def main():
 
         # Generate dual line graph
         st.subheader(f"Shoe Price vs Close Price for {selected_brand} in {selected_year}")
-        generate_dual_line_graph(selected_brand_data, selected_brand, selected_year)
+        generate_dual_line_graph_rescaled(selected_brand_data, selected_brand, selected_year)
 
 if __name__ == "__main__":
     main()
