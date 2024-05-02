@@ -155,7 +155,27 @@ def generate_correlation_heatmap(data):
     plt.title('Correlation Heatmap')
     st.pyplot()
 
+# Function to generate dual line graph
+def generate_dual_line_graph(data, selected_brand, selected_year):
+    plt.figure(figsize=(10, 6))
+    
+    # Filter data for the selected brand and year
+    selected_data = data[(data['Brand'] == selected_brand) & (data['Date'].dt.year == selected_year)]
+    
+    # Plot shoe price
+    sns.lineplot(x='Date', y='Price', data=selected_data, label='Shoe Price', color='blue')
+    
+    # Plot close price
+    sns.lineplot(x='Date', y='Close', data=selected_data, label='Close Price', color='red')
+    
+    plt.xlabel('Date')
+    plt.ylabel('Price')
+    plt.title(f'Shoe Price vs Close Price for {selected_brand} in {selected_year}')
+    plt.xticks(rotation=45)
+    plt.legend()
+    st.pyplot()
 
+    
 # Streamlit app
 def main():
     st.title('Stock Analysis Data App')
@@ -254,6 +274,10 @@ def main():
         # Generate line plot of Ratings Over Time
         st.subheader(f"Ratings Over Time for {selected_brand} in {selected_year}")
         generate_line_plot_ratings(selected_brand_data, selected_brand, selected_year)
+
+        # Generate dual line graph
+        st.subheader(f"Shoe Price vs Close Price for {selected_brand} in {selected_year}")
+        generate_dual_line_graph(selected_brand_data, selected_brand, selected_year)
 
 if __name__ == "__main__":
     main()
