@@ -163,12 +163,9 @@ def main():
     # Page navigation
     page = st.sidebar.radio("Navigate", ['Start Page', 'Analysis Page', 'Overall Analysis Page', 'Brand Analysis Page'])
 
-    if page == 'Start Page':
-        st.header('Start Page')
+    if page == 'Main':
+        st.header('Main')
 
-    elif page == 'Analysis Page':
-        st.header('Analysis Page')
-        
         # Overall Analysis Page
         st.subheader('Overall Analysis Page:')
         st.markdown("""
@@ -197,6 +194,11 @@ def main():
         st.write("""
         The brand analysis page provides focused insights into a specific brand's customer sentiment, stock performance, and ratings trends over time. Users can use these insights to assess brand competitiveness, customer satisfaction, and market positioning.
         """)
+
+    elif page == 'Analysis Page':
+        st.header('Analysis Page')
+        
+        
     
     elif page == 'Overall Analysis Page':
         st.header('Overall Analysis of all brands')
