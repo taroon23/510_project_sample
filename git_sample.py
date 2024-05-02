@@ -26,6 +26,18 @@ def load_data():
     # Concatenate Amazon and Google data
     amazon_google_data = pd.concat([amazon_data, google_data], ignore_index=True)
 
+    # Read the dataset
+    adidas_sales = pd.read_excel('Adidas Sales.xlsx', header=4)
+
+    # Use only the specified columns
+    adidas_sales = adidas_sales[['Retailer ID', 'Invoice Date' , 'State', 'City', 'Product', 'Price per Unit', 'Units Sold', 'Total Sales', 'Operating Profit']]
+
+    # Filter the data to include only rows where product is footwear
+    adidas_sales = adidas_sales[adidas_sales['Product'].str.contains('Footwear', case=False)]
+    
+    # Rename the column 'Invoice Date' to 'Date'
+    adidas_sales = adidas_sales.rename(columns={'Invoice Date': 'Date'})
+
     stock_data = pd.read_csv('stock_data.csv')
 
     # Merge stock data with review data
@@ -34,7 +46,7 @@ def load_data():
     # Drop rows with missing values in the 'Close' column
     stock_analysis_data = combined_data.dropna(subset=['Close'])
 
-    return stock_analysis_data, stock_data
+    return stock_analysis_data, stock_data, adidas_sales
 
 # Function to perform sentiment analysis
 def perform_sentiment_analysis(data):
@@ -72,6 +84,20 @@ stock_analysis_data['Date'] = pd.to_datetime(stock_analysis_data['Date'])
 stock_analysis_data = stock_analysis_data.sort_values(by='Date')
 
 stock_analysis_data.dropna(inplace=True)
+
+# Group the data by 'Invoice Date' and sum up 'Units Sold' and 'Total Sales'
+adidas_sales_daywise = adidas_sales.groupby('Date')[['Units Sold', 'Total Sales']].sum().reset_index()
+
+# Filter stock_data to create adidas_stock_data
+adidas_stock_data = stock_data[stock_data['Brand'] == 'Adidas']
+
+# Perform inner join on 'Date' column
+adidas_merged_data = pd.merge(adidas_stock_data, adidas_sales_daywise, on='Date', how='inner')
+
+# Select and rename columns
+adidas_stock_analysis_data = adidas_merged_data[['Date', 'Units Sold', 'Total Sales', 'Close', 'Volume']]
+adidas_stock_analysis_data = adidas_stock_analysis_data.rename(columns={'Units Sold_y': 'Units Sold', 'Total Sales_y': 'Total Sales', 'Volume': 'Stock Sold'})
+
 
 # Function to generate pie chart
 def generate_pie_chart(data, selected_brand):
@@ -156,29 +182,6 @@ def generate_correlation_heatmap(data):
     plt.title('Correlation Heatmap')
     st.pyplot()
 
-'''
-
-# Function to generate dual line graph
-def generate_dual_line_graph(data, selected_brand, selected_year):
-    plt.figure(figsize=(10, 6))
-    
-    # Filter data for the selected brand and year
-    selected_data = data[(data['Brand'] == selected_brand) & (data['Date'].dt.year == selected_year)]
-    
-    # Plot shoe price
-    sns.lineplot(x='Date', y='Ratings', data=selected_data, label='Ratings', color='blue')
-    
-    # Plot close price
-    sns.lineplot(x='Date', y='Close', data=selected_data, label='Close Price', color='red')
-    
-    plt.xlabel('Date')
-    plt.ylabel('Price')
-    plt.title(f'Shoe Price vs Close Price for {selected_brand} in {selected_year}')
-    plt.xticks(rotation=45)
-    plt.legend()
-    st.pyplot()
-
-'''
 
 def generate_dual_line_graph_rescaled(data, selected_brand, selected_year):
     plt.figure(figsize=(10, 6))
@@ -208,7 +211,7 @@ def main():
     st.title('Stock Analysis Data App')
 
     # Page navigation
-    page = st.sidebar.radio("Navigate", ['Main', 'Analysis Page', 'Overall Analysis Page', 'Brand Analysis Page'])
+    page = st.sidebar.radio("Navigate", ['Main', 'Analysis Page', 'Adidas Analysis Page', 'Overall Analysis Page'])
 
     if page == 'Main':
         st.header('7401376800')
@@ -247,8 +250,8 @@ def main():
         
         
     
-    elif page == 'Overall Analysis Page':
-        st.header('Overall Analysis of all brands')
+    elif page == 'Adidas Analysis Page':
+        st.header('Overall Analysis of Adidas')
         
         # Generate Box Plot of Ratings by Brand
         st.header('Box Plot of Ratings by Brand')
@@ -266,8 +269,8 @@ def main():
         st.header('Correlation Heatmap')
         generate_correlation_heatmap(stock_analysis_data)
 
-    elif page == 'Brand Analysis Page':
-        st.header('Brand Analysis Page')
+    elif page == 'Overall Analysis Page':
+        st.header('Overall Analysis of all brands')
 
         # Dropdown for selecting brand
         selected_brand = st.selectbox("Select Brand", stock_analysis_data['Brand'].unique())
