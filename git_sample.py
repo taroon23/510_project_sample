@@ -72,7 +72,7 @@ def perform_sentiment_analysis(data):
     return data
 
 # Load the data
-stock_analysis_data, stock_data = load_data()
+stock_analysis_data, stock_data, adidas_sales = load_data()
 
 stock_data['Date'] = pd.to_datetime(stock_data['Date'])
 
