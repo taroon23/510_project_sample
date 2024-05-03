@@ -319,14 +319,8 @@ def main():
             avg_ratings = selected_brand_data['Ratings'].mean()
 
             # Display average price and ratings
-            st.write(f"Average Price: {avg_price}")
-            st.write(f"Average Ratings: {avg_ratings}")
-
-
-        # Display average price and ratings
-        st.write(f"Avg Price of Shoe: {avg_price:.2f}")
-        st.write(f"Avg Ratings: {avg_ratings:.2f}")
-
+            st.markdown(f"<p style='text-align: center'><strong>Avg Price of Shoe:</strong> {avg_price:.2f}</p>", unsafe_allow_html=True)
+            st.markdown(f"<p style='text-align: center'><strong>Avg Ratings:</strong> {avg_ratings:.2f}</p>", unsafe_allow_html=True)
 
         # Generate pie chart
         st.subheader(f"Sentiment Analysis for {selected_brand}")
