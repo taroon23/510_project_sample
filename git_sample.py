@@ -341,17 +341,26 @@ def main():
         fig_pie = generate_pie_chart(selected_brand_data, selected_brand)
         st.pyplot(fig_pie)       
 
+        st.write("")
+        st.write("")
+
         # Generate line graph
         st.subheader(f"Stock Value for {selected_brand} in {selected_year}")
         st.write("")
         fig_lg = generate_line_graph(selected_stock_data, selected_brand, selected_year)
         st.pyplot(fig_lg)
         
+        st.write("")
+        st.write("")
+
         # Generate line plot of Ratings Over Time
         st.subheader(f"Ratings Over Time for {selected_brand} in {selected_year}")
         st.write("")
         generate_line_plot_ratings(selected_brand_data, selected_brand, selected_year)
 
+        st.write("")
+        st.write("")
+        
         # Generate dual line graph
         st.subheader(f"Ratings vs Close Price for {selected_brand} in {selected_year}")
         st.write("")
