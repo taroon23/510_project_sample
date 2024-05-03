@@ -366,14 +366,40 @@ def main():
         # Display brand logo and calculate average price and ratings
         col1, col2 = st.columns(2)
 
-        with col1:
-            st.image(get_brand_logo(selected_brand), use_column_width='auto')
+        # Dropdown for selecting the state
+        line_selected_state = col1.selectbox("Select State", ['All States'] + list(adidas_sales['State'].unique()))
 
-        with col2:
-            st.write("")
+        # Dropdown for selecting the year
+        line_selected_year = col1.selectbox("Select Year", ['All Years'] + list(adidas_sales['Date'].dt.year.unique()))
 
-        st.write("")
-        st.write("")
+        # Filter the adidas_sales DataFrame based on the selected state and year
+        if line_selected_state != 'All States' and line_selected_year != 'All Years':
+            line_adidas_sales_filtered = adidas_sales[(adidas_sales['State'] == line_selected_state) & (adidas_sales['Date'].dt.year == line_selected_year)]
+        elif line_selected_state != 'All States':
+            line_adidas_sales_filtered = adidas_sales[adidas_sales['State'] == line_selected_state]
+        elif line_selected_year != 'All Years':
+            line_adidas_sales_filtered = adidas_sales[adidas_sales['Date'].dt.year == line_selected_year]
+        else:
+            line_adidas_sales_filtered = adidas_sales
+
+        # Group the filtered DataFrame by the 'Date' column and aggregate the sales data
+        line_sales_data_month = line_adidas_sales_filtered.groupby(line_adidas_sales_filtered['Date'].dt.to_period('M')).agg({
+            'Total Sales': 'sum'
+        }).reset_index()
+
+        # Calculate the total sales, units sold, and overall profit
+        line_total_sales = line_sales_data_month['Total Sales'].sum()
+        line_units_sold = line_adidas_sales_filtered['Units Sold'].sum()
+        line_overall_profit = line_adidas_sales_filtered['Operating Profit'].sum()
+
+        # Display the total sales, units sold, and overall profit
+        col2.write(f"Total Sales: {line_total_sales:.2f}")
+        col2.write(f"Units Sold: {line_units_sold:.2f}")
+        col2.write(f"Overall Profit: {line_overall_profit:.2f}")
+
+        # Display a line graph of total sales for every month for the selected state and year
+        st.subheader(f"Total Sales for {line_selected_state if line_selected_state != 'All States' else 'All States'} in {line_selected_year if line_selected_year != 'All Years' else 'All Years'}")
+        st.line_chart(line_sales_data_month.set_index('Date'))
 
 
     elif page == 'Overall Analysis Page':
