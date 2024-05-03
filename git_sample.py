@@ -127,7 +127,7 @@ def generate_pie_chart(data, selected_brand):
     plt.tight_layout()
 
     # Create legend without labels
-    plt.legend(wedges, sentiment_counts.index, loc="upper right", labelspacing=0.5)
+    # plt.legend(wedges, sentiment_counts.index, loc="upper right", labelspacing=0.5)
     
     return fig
 
