@@ -407,6 +407,34 @@ def main():
     elif page == 'Data Description':
         st.header('Data Description')
 
+        # Data Source 1
+        st.write("DATA SOURCE 1:")
+        st.markdown("- API: Twitter API")
+        st.markdown("- API Docs: [Twitter API Documentation](https://docs.tweepy.org/en/stable/client.html)")
+        st.write("Brief Description: The Twitter API allows access to a vast amount of social media data, including tweets, user profiles, follower counts, engagement metrics, and trends. This data can be used to analyze trends, sentiment, and the influence of social media on consumer behavior.")
+        st.write("")
+
+        # Data Source 2
+        st.write("DATA SOURCE 2:")
+        st.markdown("- API: Amazon Product Advertising API")
+        st.markdown("- API Docs: [Amazon Product Advertising API Documentation](https://webservices.amazon.com/paapi5/documentation/)")
+        st.write("Brief Description: The Amazon Product Advertising API provides access to product data, including product details, prices, ratings, reviews, and sales numbers. This data can be used to analyze consumer preferences, purchasing behavior, and the impact of social media influence on product sales.")
+        st.write("")
+
+        # Data Source 3
+        st.write("DATA SOURCE 3:")
+        st.markdown("- Website: Reddit")
+        st.markdown("- URL: [Reddit Product Reviews](https://www.reddit.com/r/ProductReviews/)")
+        st.write("Brief Description: Reddit is a social media platform with a wide range of subreddits covering diverse topics, including product reviews, consumer experiences, and discussions. By scraping data from relevant subreddits, we can collect user-generated content such as reviews, comments, and discussions related to various products and brands.")
+        st.write("")
+
+        # Data Source 4
+        st.write("Data Source 4:")
+        st.write("- Dataset: Adidas Sales Dataset")
+        st.write("- Dataset Link: [Adidas Sales Dataset](https://www.kaggle.com/datasets/heemalichaudhari/adidas-sales-dataset)")
+        st.write("Brief Description: The Adidas Sales Dataset provides detailed information on Adidas sales, including the number of units sold, total sales revenue, sales locations, product types, and other relevant data. This dataset offers insights into Adidas's sales performance, market presence, and product preferences across different regions and product categories.")
+
+
     elif page == 'Adidas Analysis Page':
         st.header('Overall Analysis of Adidas')
         
