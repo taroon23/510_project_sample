@@ -308,6 +308,7 @@ def main():
 
         with col2:
             
+            '''
             # Calculate Adidas Statistics
             selected_brand_data = stock_analysis_data[stock_analysis_data['Brand'] == 'Adidas']
             avg_price = selected_brand_data['Price'].mean()
@@ -317,11 +318,10 @@ def main():
             st.write("")
             st.markdown(f"<p style='text-align: center'><strong>Avg Price of Shoe:</strong> {avg_price:.2f}</p>", unsafe_allow_html=True)
             st.markdown(f"<p style='text-align: center'><strong>Avg Ratings:</strong> {avg_ratings:.1f}</p>", unsafe_allow_html=True)
-
+            '''
 
             available_years = [2020, 2021]
-            selected_year = st.selectbox("Select Year", available_years, format_func=lambda x: f"<span style='font-size: 12px'>{x}</span>")
-
+            selected_year = st.selectbox("Select Year", available_years)
 
             # Filter the adidas_sales DataFrame based on the selected year
             adidas_sales_selected_year = adidas_sales[adidas_sales['Date'].dt.year == selected_year]
