@@ -392,10 +392,20 @@ def main():
         line_units_sold = line_adidas_sales_filtered['Units Sold'].sum()
         line_overall_profit = line_adidas_sales_filtered['Operating Profit'].sum()
 
-        # Display the total sales, units sold, and overall profit
-        col2.write(f"Total Sales: {line_total_sales:.2f}")
-        col2.write(f"Units Sold: {line_units_sold:.2f}")
-        col2.write(f"Overall Profit: {line_overall_profit:.2f}")
+
+        # Format total sales in terms of K for thousands and M for millions
+        line_total_sales_formatted = f"${line_total_sales/1000:.1f}K" if line_total_sales < 1000000 else f"${line_total_sales/1000000:.1f}M"
+
+        # Format units sold in terms of K for thousands
+        line_units_sold_formatted = f"{line_units_sold/1000:.1f}K"
+
+        # Format overall profit in terms of K for thousands and M for millions
+        line_overall_profit_formatted = f"${line_overall_profit/1000:.1f}K" if line_overall_profit < 1000000 else f"${line_overall_profit/1000000:.1f}M"
+
+        # Display the stats
+        st.markdown(f"<p style='text-align: center'><strong>Total Sales:</strong> {line_total_sales_formatted}</p>", unsafe_allow_html=True)
+        st.markdown(f"<p style='text-align: center'><strong>Units sold:</strong> {line_units_sold_formatted}</p>", unsafe_allow_html=True)
+        st.markdown(f"<p style='text-align: center'><strong>Overall Profit:</strong> {line_overall_profit_formatted}</p>", unsafe_allow_html=True)
 
         # Display a line graph of total sales for every month for the selected state and year
         st.subheader(f"Total Sales for {line_selected_state if line_selected_state != 'All States' else 'All States'} in {line_selected_year if line_selected_year != 'All Years' else 'All Years'}")
