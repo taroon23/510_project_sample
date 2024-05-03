@@ -199,6 +199,18 @@ def generate_dual_line_graph_rescaled(data, selected_brand, selected_year):
     plt.legend()
     st.pyplot()
 
+def generate_adidas_line_graph(line_adidas_sales_filtered, line_selected_state, line_selected_year):
+    plt.figure(figsize=(10, 6))
+    sns.lineplot(x='Date', y='Total Sales', data=line_adidas_sales_filtered)
+    plt.xlabel('Date')
+    plt.ylabel('Total Sales')
+    plt.title(f'Total Sales for {line_selected_state} in {line_selected_year}')
+    plt.xticks(rotation=45)
+    # Set x-axis interval to months
+    plt.gca().xaxis.set_major_locator(MonthLocator())
+    # Get the current figure and pass it to st.pyplot()   
+    st.set_option('deprecation.showPyplotGlobalUse', False)
+
 def create_wordcloud(data, selected_brand):
     
     # Define function to map POS tag to wordnet POS tag
@@ -409,18 +421,8 @@ def main():
         col2.write(f"<p style='text-align: center'><strong>Overall Profit:</strong> {line_overall_profit_formatted}</p>", unsafe_allow_html=True)
 
         # Display a line graph of total sales for every month for the selected state and year
-
-        plt.figure(figsize=(10, 6))
-        sns.lineplot(x='Date', y='Total Sales', data=line_adidas_sales_filtered)
-        plt.xlabel('Date')
-        plt.ylabel('Total Sales')
-        plt.title(f'Total Sales for {line_selected_state} in {line_selected_year}')
-        plt.xticks(rotation=45)
-        # Set x-axis interval to months
-        plt.gca().xaxis.set_major_locator(MonthLocator())
-        # Get the current figure and pass it to st.pyplot()   
-        st.set_option('deprecation.showPyplotGlobalUse', False)
-
+        fig_lg = generate_adidas_line_graph(line_adidas_sales_filtered, line_selected_state, line_selected_year)
+        st.pyplot(fig_lg)
 
     elif page == 'Overall Analysis Page':
         st.header('Overall Analysis of all brands')
