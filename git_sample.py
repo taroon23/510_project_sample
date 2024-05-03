@@ -119,7 +119,7 @@ def get_brand_logo(selected_brand):
 def generate_pie_chart(data, selected_brand):
     sentiment_counts = data['Sentiment'].value_counts()
     fig, ax = plt.subplots()
-    wedges, labels, autopct = ax.pie(sentiment_counts, labels=None, autopct=None, startangle=90)
+    wedges, _, _ = ax.pie(sentiment_counts, autopct='%1.1f%%', startangle=90)
     centre_circle = plt.Circle((0,0),0.70,fc='white')
     fig.gca().add_artist(centre_circle)
     ax.axis('equal')
@@ -127,9 +127,10 @@ def generate_pie_chart(data, selected_brand):
     plt.tight_layout()
 
     # Create legend without labels
-    # plt.legend(wedges, sentiment_counts.index, loc="upper right", labelspacing=0.5)
+    plt.legend(wedges, sentiment_counts.index, loc="upper right", labelspacing=0.5)
     
     return fig
+
 
 # Function to generate line graph
 def generate_line_graph(data, selected_brand, selected_year):
