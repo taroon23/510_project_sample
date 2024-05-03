@@ -9,6 +9,19 @@ from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from matplotlib.dates import MonthLocator
 from sklearn.preprocessing import MinMaxScaler
 
+from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords
+from nltk import pos_tag
+from nltk.corpus import wordnet 
+from nltk.stem.wordnet import WordNetLemmatizer
+from wordcloud import WordCloud
+
+# Download NLTK resources
+nltk.download('punkt')
+nltk.download('stopwords')
+nltk.download('wordnet')
+nltk.download('averaged_perceptron_tagger')
+
 # Function to load data
 def load_data():
     
