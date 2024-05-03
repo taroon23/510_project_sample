@@ -328,7 +328,37 @@ def main():
     elif page == 'Explanation Page':
         st.header('Explanation')
         
-        
+        st.header('What did you set out to study?')
+        st.write("Initially, the project aimed to conduct sentiment analysis on consumer behavior using social media data from Twitter, product reviews from Amazon, and user-generated content from Reddit. However, the project evolved due to two main reasons:")
+
+        st.subheader('Change in Data Diversity:')
+        st.write("Originally, all three data sources primarily consisted of review data, limiting insights.")
+        st.write("With project expansion, sales and stock data were incorporated for a more comprehensive analysis.")
+
+        st.subheader('Changes in Data Sources:')
+        st.write("Originally planned Twitter API usage was altered due to limitations and costs.")
+        st.write("Diverse data sources were chosen to provide richer insights beyond sentiment analysis.")
+
+        st.write("**How it Differs from the Original Plan:**")
+        st.write("**Diverse Data Types:** Transitioned from solely analyzing review data to incorporating sales and stock data.")
+        st.write("**Change in Data Sources:** Shifted from relying solely on the Twitter API to using publicly available data from platforms like Amazon and Yahoo Finance.")
+        st.write("**Enhanced Analysis Scope:** Expanded analysis beyond sentiment to include factors influencing consumer behavior and brand performance.")
+
+        st.header('What did you Discover/what were your conclusions?')
+        st.write("The project evolved to incorporate additional data sources such as sales data and stock performance metrics alongside review data. This allowed for a more comprehensive analysis of consumer sentiment and brand performance. The conclusions drawn included insights into consumer sentiment trends, factors influencing sentiment, and opportunities for brands to enhance products, services, and marketing strategies based on feedback.")
+
+        st.header('What difficulties did you have in completing the project?')
+        st.write("Some difficulties encountered during the project included:")
+        st.write("- Limited availability of sales data for multiple brands and recent timeframes, restricting the ability to perform comprehensive analysis across brands and time periods.")
+        st.write("- Challenges in aligning review data with sales and stock data to derive meaningful correlations and insights.")
+        st.write("- Initial reliance on paid APIs such as Twitter API, leading to a shift in data sources to obtain diverse data types.")
+
+        st.header('What would you do “next” to expand or augment the project?')
+        st.write("To expand the project further, the following steps could be taken:")
+        st.write("- Obtain sales data for multiple brands in real-time or for recent timeframes to analyze the real-time performance of brands in the footwear industry.")
+        st.write("- Incorporate additional data from social media platforms like Twitter and Reddit to capture public sentiment and discussions about brands, enabling a more comprehensive analysis of consumer behavior.")
+        st.write("- Implement advanced analytics techniques such as predictive modeling and clustering to identify patterns, trends, and anomalies in the data, leading to more actionable insights for brands.")
+        st.write("- Explore interactive visualization tools and dashboards to present the analysis results in an intuitive and user-friendly manner, facilitating easier interpretation and decision-making for stakeholders.")
     
     elif page == 'Adidas Analysis Page':
         st.header('Overall Analysis of Adidas')
