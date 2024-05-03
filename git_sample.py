@@ -329,28 +329,32 @@ def main():
                 st.write("")
 
             # Display average price and ratings
-            st.markdown(f"<p style='text-align: center'><strong>Avg Price of Shoe:</strong> {avg_price:.2f}</p>", unsafe_allow_html=True)
-            st.markdown(f"<p style='text-align: center'><strong>Avg Ratings:</strong> {avg_ratings:.2f}</p>", unsafe_allow_html=True)
+            st.markdown(f"<p style='text-align: center'><strong>Avg Price of Shoe:</strong> {avg_price:.3f}</p>", unsafe_allow_html=True)
+            st.markdown(f"<p style='text-align: center'><strong>Avg Ratings:</strong> {avg_ratings:.3f}</p>", unsafe_allow_html=True)
 
         st.write("")
         st.write("")
 
         # Generate pie chart
         st.subheader(f"Sentiment Analysis for {selected_brand}")
+        st.write("")
         fig_pie = generate_pie_chart(selected_brand_data, selected_brand)
         st.pyplot(fig_pie)       
 
         # Generate line graph
         st.subheader(f"Stock Value for {selected_brand} in {selected_year}")
+        st.write("")
         fig_lg = generate_line_graph(selected_stock_data, selected_brand, selected_year)
         st.pyplot(fig_lg)
         
         # Generate line plot of Ratings Over Time
         st.subheader(f"Ratings Over Time for {selected_brand} in {selected_year}")
+        st.write("")
         generate_line_plot_ratings(selected_brand_data, selected_brand, selected_year)
 
         # Generate dual line graph
         st.subheader(f"Ratings vs Close Price for {selected_brand} in {selected_year}")
+        st.write("")
         generate_dual_line_graph_rescaled(selected_brand_data, selected_brand, selected_year)
 
 if __name__ == "__main__":
