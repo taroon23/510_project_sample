@@ -302,11 +302,11 @@ def main():
     st.title("Analyzing Shoe Brands' Sentiment, Sales & Stock Performance'")
 
     # Page navigation
-    page = st.sidebar.radio("Navigate", ['Main Page', 'Explanation Page', 'Adidas Analysis Page', 'Overall Analysis Page'])
+    page = st.sidebar.radio("Navigate", ['Main Page', 'Explanation Page', 'Data Description', 'Adidas Analysis Page', 'Overall Analysis Page'])
 
-    if page == 'Main':
+    if page == 'Main Page':
 
-        st.header('7401376800')
+        st.header('Taroon Ganesh - 7401376800')
 
         # 2. How to Use the WebApp:
         st.header("How to Use the WebApp:")
@@ -404,6 +404,9 @@ def main():
         st.write("- Incorporate additional data from social media platforms like Twitter and Reddit to capture public sentiment and discussions about brands, enabling a more comprehensive analysis of consumer behavior.")
         st.write("- Implement advanced analytics techniques such as predictive modeling and clustering to identify patterns, trends leading to more actionable insights for brands.")
     
+    elif page == 'Data Description':
+        st.header('Data Description')
+
     elif page == 'Adidas Analysis Page':
         st.header('Overall Analysis of Adidas')
         
