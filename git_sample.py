@@ -295,6 +295,110 @@ def main():
     elif page == 'Adidas Analysis Page':
         st.header('Overall Analysis of Adidas')
         
+        selected_brand = 'Adidas'
+
+        st.write("")
+        st.write("")
+
+        # Display brand logo and calculate average price and ratings
+        col1, col2 = st.columns(2)
+
+        with col1:
+            st.image(get_brand_logo(selected_brand), use_column_width='auto')
+
+        with col2:
+
+            # Calculate the number of blank lines needed for vertical centering
+            num_blank_lines = st.empty()
+
+            # Display blank lines for vertical centering
+            for _ in range(4):
+                st.write("")
+
+            available_years = [2020,2021]
+    
+            selected_year = st.selectbox("Select Year", available_years)
+
+            # Filter the adidas_sales DataFrame based on the selected year
+            adidas_sales_selected_year = adidas_sales[adidas_sales['Date'].dt.year == selected_year]
+
+            # Group the filtered DataFrame by the 'Date' column and aggregate the sales data
+            sales_data_year = adidas_sales_selected_year.groupby('Date').agg({
+                'Total Sales': 'sum',
+                'Units Sold': 'sum',
+                'Operating Profit': 'sum'
+            }).reset_index()
+
+            # Calculate the overall operating profit
+
+            total_adidas_sales = sales_data_year['Total Sales'].sum()
+            total_quantity_sold = sales_data_year['Units Sold'].sum()
+            overall_operating_profit = sales_data_year['Operating Profit'].sum()
+
+            # Calculate Adidas Statistics
+            avg_price = selected_brand_data['Price'].mean()
+            avg_ratings = selected_brand_data['Ratings'].mean() 
+
+            # Display the stats
+            st.markdown(f"<p style='text-align: center'><strong>Total Sales:</strong> {total_adidas_sales:.2f}</p>", unsafe_allow_html=True)
+            st.markdown(f"<p style='text-align: center'><strong>Units sold:</strong> {total_quantity_sold:.2f}</p>", unsafe_allow_html=True)
+            st.markdown(f"<p style='text-align: center'><strong>Overall Profit:</strong> {overall_operating_profit:.2f}</p>", unsafe_allow_html=True)
+
+            st.markdown(f"<p style='text-align: center'><strong>Avg Price of Shoe:</strong> {avg_price:.2f}</p>", unsafe_allow_html=True)
+            st.markdown(f"<p style='text-align: center'><strong>Avg Ratings:</strong> {avg_ratings:.2f}</p>", unsafe_allow_html=True)
+
+        st.write("")
+        st.write("")
+
+        # Display brand logo and calculate average price and ratings
+        col1, col2 = st.columns(2)
+
+        with col1:
+
+            # Calculate average price and ratings
+            avg_price = selected_brand_data['Price'].mean()
+            avg_ratings = selected_brand_data['Ratings'].mean()
+
+            # Display blank lines for vertical centering
+            for _ in range(4):
+                st.write("")
+
+            # Display average price and ratings
+            st.markdown(f"<p style='text-align: center'><strong>Avg Price of Shoe:</strong> {avg_price:.2f}</p>", unsafe_allow_html=True)
+            st.markdown(f"<p style='text-align: center'><strong>Avg Ratings:</strong> {avg_ratings:.2f}</p>", unsafe_allow_html=True)
+            
+        with col2:
+           
+            st.image(get_brand_logo(selected_brand), use_column_width='auto')
+ 
+
+        st.write("")
+        st.write("")
+
+        # Display brand logo and calculate average price and ratings
+        col1, col2 = st.columns(2)
+
+        with col1:
+            st.image(get_brand_logo(selected_brand), use_column_width='auto')
+
+        with col2:
+            # Calculate average price and ratings
+            avg_price = selected_brand_data['Price'].mean()
+            avg_ratings = selected_brand_data['Ratings'].mean()
+
+            # Calculate the number of blank lines needed for vertical centering
+            num_blank_lines = st.empty()
+
+            # Display blank lines for vertical centering
+            for _ in range(4):
+                st.write("")
+
+            # Display average price and ratings
+            st.markdown(f"<p style='text-align: center'><strong>Avg Price of Shoe:</strong> {avg_price:.2f}</p>", unsafe_allow_html=True)
+            st.markdown(f"<p style='text-align: center'><strong>Avg Ratings:</strong> {avg_ratings:.2f}</p>", unsafe_allow_html=True)
+
+        st.write("")
+        st.write("")
 
 
     elif page == 'Overall Analysis Page':
