@@ -356,7 +356,43 @@ def main():
         st.write("- **Enhanced Analysis Scope:** Expanded analysis beyond sentiment to include factors influencing consumer behavior and brand performance.")
 
         st.header('What did you Discover/what were your conclusions?')
-        st.write("The project evolved to incorporate additional data sources such as sales data and stock performance metrics alongside review data. This allowed for a more comprehensive analysis of consumer sentiment and brand performance. The conclusions drawn included insights into consumer sentiment trends, factors influencing sentiment, and opportunities for brands to enhance products, services, and marketing strategies based on feedback.")
+
+        st.markdown("#### Skechers Performance:")
+        st.write("- **High Customer Ratings:** Despite its smaller market presence compared to Nike and Adidas, Skechers boasts the highest average customer ratings, around 4.54 stars.")
+        st.write("- **Positive Reviews:** Skechers also enjoys the highest percentage of positive reviews, approximately 96%, which is quite impressive.")
+        st.write("- **Stock Potential:** Despite its strong performance, Skechers maintains a relatively lower stock price, averaging around $50, suggesting a potentially lucrative investment opportunity.")
+
+        st.markdown("#### Under Armour Investment Opportunity:")
+        st.write("- **Low Risk:** Under Armour emerges as an attractive investment option with the lowest risk, given its cheapest stock price at $8.")
+        st.write("- **Favorable Ratings:** Its average ratings, close to 4.4, indicate a favorable sentiment among customers.")
+
+        st.markdown("#### Nike and Adidas:")
+        st.write("- **Price Discrepancy:** Nike, despite having the costliest shoes with an average price of around $93, surprisingly exhibits the lowest percentage of positive reviews.")
+        st.write("- **Brand Prestige:** Both Nike and Adidas establish themselves as prominent brands with the highest average stock prices compared to other brands.")
+
+        st.markdown("#### Word Cloud Analysis:")
+        st.write("- **Positive Attributes:** Analysis of word clouds for each brand reveals recurring positive attributes such as 'comfortable,' 'nice,' and 'great,' indicating strong consumer sentiment towards these brands.")
+
+        st.markdown("#### Impact of Sentiment on Puma Stock Price:")
+        st.write("- **Inconclusive Relationship:** The analysis explored the impact of sentiment on Puma's stock price, but conclusive evidence regarding the correlation between sentiment and stock prices could not be established.")
+
+        st.markdown("#### Ratings vs Close Price Analysis:")
+        st.write("- **Correlation Found:** Examining the relationship between ratings and close prices for each brand revealed a notable finding.")
+        st.write("- **Correlation Trends:** Fluctuations in ratings tend to correlate with subsequent fluctuations in stock prices. Dips in ratings are often followed by dips in stock prices, while rises in ratings correspond to increases in stock prices in the subsequent months.")
+
+        st.markdown("### Insights from Adidas Analysis:")
+
+        st.markdown("#### Sales Analysis:")
+        st.write("- **Total Sales and Profit:** Insights into the total sales, number of units sold, and overall profit of Adidas across the selected timeframe were obtained.")
+
+        st.markdown("#### State-wise Performance:")
+        st.write("- **Regional Variations:** Further analysis conducted on a state-wise basis revealed variations in performance.")
+        st.write("- **Standout Performer:** New York emerged as a standout performer compared to other states, indicating stronger sales or market presence in that region.")
+
+        st.markdown("#### Relationship between Units Sold and Close Price:")
+        st.write("- **Significant Relationship:** A correlation analysis explored the relationship between units sold and the closing (stock) price of Adidas.")
+        st.write("- **Visual Representation:** The correlation is visually depicted through a graph, showcasing how fluctuations in units sold correspond to changes in the close price of Adidas stock.")
+
 
         st.header('What difficulties did you have in completing the project?')
         st.write("Some difficulties encountered during the project included:")
