@@ -307,6 +307,11 @@ def main():
             st.image(get_brand_logo(selected_brand), use_column_width='auto')
 
         with col2:
+            
+            # Calculate Adidas Statistics
+            selected_brand_data = stock_analysis_data[stock_analysis_data['Brand'] == 'Adidas']
+            avg_price = selected_brand_data['Price'].mean()
+            avg_ratings = selected_brand_data['Ratings'].mean()
 
             # Display blank lines for vertical centering
             st.write("")
@@ -329,11 +334,6 @@ def main():
 
             # Calculate the overall operating profit
             overall_operating_profit = sales_data_year['Operating Profit'].sum()
-
-            # Calculate Adidas Statistics
-            selected_brand_data = stock_analysis_data[(stock_analysis_data['Brand'] == 'Adidas') & (stock_analysis_data['Date'].dt.year == selected_year)]
-            avg_price = selected_brand_data['Price'].mean()
-            avg_ratings = selected_brand_data['Ratings'].mean()
 
             # Display the stats
             st.markdown(f"<p style='text-align: center'><strong>Total Sales:</strong> {sales_data_year['Total Sales'].sum():.2f}</p>", unsafe_allow_html=True)
