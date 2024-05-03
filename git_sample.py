@@ -241,6 +241,7 @@ def generate_dual_line_graph_rescaled(data, selected_brand, selected_year):
     st.pyplot()
 
 def create_wordcloud(data, selected_brand):
+    
     # Define function to map POS tag to wordnet POS tag
     def get_wordnet_pos(word):
         tag = nltk.pos_tag([word])[0][1][0].upper()
@@ -255,7 +256,7 @@ def create_wordcloud(data, selected_brand):
 
     # Tokenize, remove stopwords, and lemmatize the words in the 'Review' column
     words = []
-    print(f"Word cloud for {brand}")
+
     for review in word_analysis_data['Review']:
         tokens = word_tokenize(review)  # Tokenize the review
         words.extend(tokens)  # Extend the words list with tokens
