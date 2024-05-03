@@ -649,6 +649,8 @@ def main():
             - **Misalignment of Review and Sales Data**: Another challenge was the misalignment of review and sales data. While we had review data spanning multiple years, the available sales data was limited to 2020 and 2021. This made it difficult to correlate sales trends with consumer sentiment accurately.
             
             - **Other Considerations**: Additionally, we encountered other minor challenges such as data preprocessing, handling missing values, and ensuring the accuracy of sentiment analysis results. However, through careful data processing and analysis, we were able to mitigate these challenges to some extent.
+                    
+            - **Used an env file to save my Google Shopping API key, but streamlit had problems installing that module. Hence, my API key is exposed in the code.
         """)
 
         
