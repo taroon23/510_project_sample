@@ -309,8 +309,7 @@ def main():
         with col2:
 
             # Display blank lines for vertical centering
-            for _ in range(4):
-                st.write("")
+            st.write("")
 
             available_years = [2020, 2021]
             selected_year = st.selectbox("Select Year", available_years)
