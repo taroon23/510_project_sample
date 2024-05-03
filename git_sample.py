@@ -318,6 +318,13 @@ def main():
             avg_price = selected_brand_data['Price'].mean()
             avg_ratings = selected_brand_data['Ratings'].mean()
 
+            # Calculate the number of blank lines needed for vertical centering
+            num_blank_lines = int((col2._width / st.text_input('', value='')._repr_html_().count('<br/>')) / 2)
+
+            # Display blank lines for vertical centering
+            for _ in range(num_blank_lines):
+                st.write('')
+
             # Display average price and ratings
             st.markdown(f"<p style='text-align: center'><strong>Avg Price of Shoe:</strong> {avg_price:.2f}</p>", unsafe_allow_html=True)
             st.markdown(f"<p style='text-align: center'><strong>Avg Ratings:</strong> {avg_ratings:.2f}</p>", unsafe_allow_html=True)
