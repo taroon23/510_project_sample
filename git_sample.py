@@ -332,12 +332,12 @@ def main():
         st.write("Initially, the project aimed to conduct sentiment analysis on consumer behavior using social media data from Twitter, product reviews from Amazon, and user-generated content from Reddit. However, the project evolved due to two main reasons:")
 
         st.subheader('Change in Data Diversity:')
-        st.write("Originally, all three data sources primarily consisted of review data, limiting insights.")
-        st.write("With project expansion, sales and stock data were incorporated for a more comprehensive analysis.")
+        st.write("- Originally, all three data sources primarily consisted of review data, limiting insights.")
+        st.write("- With project expansion, sales and stock data were incorporated for a more comprehensive analysis.")
 
         st.subheader('Changes in Data Sources:')
-        st.write("Originally planned Twitter API usage was altered due to limitations and costs.")
-        st.write("Diverse data sources were chosen to provide richer insights beyond sentiment analysis.")
+        st.write("- Originally planned Twitter API usage was altered due to limitations and costs.")
+        st.write("- Diverse data sources were chosen to provide richer insights beyond sentiment analysis.")
 
         st.write("**How it Differs from the Original Plan:**")
         st.write("**Diverse Data Types:** Transitioned from solely analyzing review data to incorporating sales and stock data.")
