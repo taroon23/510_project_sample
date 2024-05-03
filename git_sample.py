@@ -307,6 +307,7 @@ def main():
         else:
             selected_stock_data = stock_data[stock_data['Brand'] == selected_brand] 
 
+        # Display brand logo and calculate average price and ratings
         with st.beta_columns(2):
             # Display brand logo
             st.image(get_brand_logo(selected_brand), use_column_width='auto')
