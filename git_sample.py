@@ -322,7 +322,7 @@ def main():
             num_blank_lines = st.empty()
 
             # Display blank lines for vertical centering
-            for _ in range(1):
+            for _ in range(4):
                 st.write("")
 
             # Display average price and ratings
