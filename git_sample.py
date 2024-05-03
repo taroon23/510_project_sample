@@ -160,26 +160,6 @@ def generate_line_graph(data, selected_brand, selected_year):
     #st.pyplot(fig)
     #fig = plt.gcf()
 
-# Function to generate Box Plot of Ratings by Brand
-def generate_box_plot(data):
-    plt.figure(figsize=(10, 6))
-    sns.boxplot(x='Brand', y='Ratings', data=data)
-    plt.xlabel('Brand')
-    plt.ylabel('Ratings')
-    plt.title('Box Plot of Ratings by Brand')
-    plt.xticks(rotation=45)
-    st.pyplot()
-
-# Function to generate Bar Plot of Average Price by Brand
-def generate_bar_plot(data):
-    plt.figure(figsize=(10, 6))
-    avg_price_by_brand = data.groupby('Brand')['Price'].mean().reset_index()
-    sns.barplot(x='Brand', y='Price', data=avg_price_by_brand)
-    plt.xlabel('Brand')
-    plt.ylabel('Average Price')
-    plt.title('Bar Plot of Average Price by Brand')
-    plt.xticks(rotation=45)
-    st.pyplot()
 
 # Function to generate line graph of Ratings Over Time
 def generate_line_plot_ratings(data, selected_brand, selected_year):
@@ -193,28 +173,7 @@ def generate_line_plot_ratings(data, selected_brand, selected_year):
     plt.gca().xaxis.set_major_locator(MonthLocator())
     st.pyplot()
 
-# Function to generate Histogram of Close Price
-def generate_close_price_histogram(data):
-    plt.figure(figsize=(10, 6))
-    sns.histplot(data['Close'], bins=20, kde=True)
-    plt.xlabel('Close Price')
-    plt.ylabel('Frequency')
-    plt.title('Histogram of Close Price')
-    st.pyplot()
 
-# Function to generate Correlation Heatmap
-def generate_correlation_heatmap(data):
-    # Drop non-numeric columns
-    numeric_data = data.select_dtypes(include=np.number)
-    
-    # Drop rows with missing values
-    numeric_data.dropna(inplace=True)
-    
-    # Generate correlation heatmap
-    plt.figure(figsize=(10, 6))
-    sns.heatmap(numeric_data.corr(), annot=True, cmap='coolwarm', fmt=".2f")
-    plt.title('Correlation Heatmap')
-    st.pyplot()
 
 
 def generate_dual_line_graph_rescaled(data, selected_brand, selected_year):
@@ -336,21 +295,7 @@ def main():
     elif page == 'Adidas Analysis Page':
         st.header('Overall Analysis of Adidas')
         
-        # Generate Box Plot of Ratings by Brand
-        st.header('Box Plot of Ratings by Brand')
-        generate_box_plot(stock_analysis_data)
 
-        # Generate Bar Plot of Average Price by Brand
-        st.header('Bar Plot of Average Price by Brand')
-        generate_bar_plot(stock_analysis_data)
-
-        # Generate Histogram of Close Price
-        st.header('Histogram of Close Price')
-        generate_close_price_histogram(stock_analysis_data)
-
-        # Generate Correlation Heatmap
-        st.header('Correlation Heatmap')
-        generate_correlation_heatmap(stock_analysis_data)
 
     elif page == 'Overall Analysis Page':
         st.header('Overall Analysis of all brands')
