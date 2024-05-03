@@ -335,7 +335,7 @@ def main():
         st.write("- Originally, all three data sources primarily consisted of review data, limiting insights.")
         st.write("- With project expansion, sales and stock data were incorporated for a more comprehensive analysis.")
 
-        st.subheader('Changes in Data Sources:')
+        st.write("**Changes in Data Sources:**")
         st.write("- Originally planned Twitter API usage was altered due to limitations and costs.")
         st.write("- Diverse data sources were chosen to provide richer insights beyond sentiment analysis.")
 
