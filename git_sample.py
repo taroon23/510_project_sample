@@ -286,7 +286,8 @@ def create_wordcloud(data, selected_brand):
     plt.figure(figsize=(10, 5))
     plt.imshow(wordcloud, interpolation='bilinear')
     plt.axis('off')
-    plt.show()
+    #plt.show()
+    st.pyplot(plt.gcf())
 
 # Streamlit app
 def main():
