@@ -4,8 +4,6 @@ seaborn
 scikit-learn
 openpyxl
 wordcloud
-time
-datetime
 bs4
 os
 serpapi
