@@ -288,42 +288,45 @@ def create_wordcloud(data, selected_brand):
 
 # Streamlit app
 def main():
-    st.title('Stock Analysis Data App')
+    st.title("Analyzing Shoe Brands' Sentiment, Sales & Stock Performance'")
 
     # Page navigation
     page = st.sidebar.radio("Navigate", ['Main', 'Analysis Page', 'Adidas Analysis Page', 'Overall Analysis Page'])
 
     if page == 'Main':
+        
+        # Main Project Page
+        st.title("Main Project Page")
+
         st.header('7401376800')
 
-        # Overall Analysis Page
-        st.subheader('Overall Analysis Page:')
+        # 2. How to Use the WebApp:
+        st.header("2. How to Use the WebApp:")
+
         st.markdown("""
-        - **Box Plot of Ratings by Brand:** Shows the distribution of ratings across different brands. It helps identify variability and central tendency in customer ratings.
-        - **Bar Plot of Average Price by Brand:** Provides insight into the average price of shoes for each brand, allowing for easy comparison.
-        - **Histogram of Close Price:** Visualizes the distribution of close prices across all shoes, giving an overview of price spread and frequency.
-        - **Correlation Heatmap:** Illustrates correlations between numerical variables like close price, ratings, and price, aiding in identifying relationships.
+            The features of this application:
+
+            - **Navigation**: Use the sidebar on the left to navigate between different pages: "Main", "Analysis Page", "Adidas Analysis Page", and "Overall Analysis Page".
+            
+            - **Analysis Pages**: The "Explanation Page" contains details on what the app is and its specifications and findings. The "Adidas Analysis Page" focuses specifically on analyzing Adidas's data, including sales, sentiment analysis, and stock performance. The "Overall Analysis Page" allows you to select a specific brand and year to explore sentiment analysis, stock performance, and other insights.
+            
+            - **Interactivity**: You can select different brands and years to view specific analyses and insights. The webapp provides various interactive visualizations, including pie charts, line graphs, and word clouds, to help you understand consumer sentiment and stock performance.
+            
+            - **Conclusion**: After exploring the data and visualizations, you can draw conclusions about consumer sentiment, stock trends, and potential correlations between them. The webapp aims to provide actionable insights for improving products, marketing strategies, and brand perception based on the analysis results.
         """)
 
-        # Conclusions for Overall Analysis Page
-        st.subheader('Conclusions:')
-        st.write("""
-        Through the overall analysis, users can understand the distribution of ratings, average prices, and close prices across brands, as well as explore correlations between different numerical variables. These insights help in identifying market trends, customer preferences, and potential areas for further investigation.
-        """)
+        # 3. Major "Gotchas":
+        st.header("3. Major 'Gotchas':")
 
-        # Explanation of the Brand Analysis Page
-        st.subheader('Brand Analysis Page:')
         st.markdown("""
-        - **Sentiment Analysis Pie Chart:** Represents the distribution of sentiment labels (positive, negative, neutral) based on customer reviews for the selected brand.
-        - **Stock Value Line Graph:** Shows the trend of close prices for the selected brand over the chosen year, allowing for tracking of stock performance.
-        - **Ratings Over Time Line Plot:** Illustrates changes in ratings for the selected brand over the selected year, helping identify customer satisfaction trends.
+            - **Limited Sales Data**: One major limitation of the project was the availability of sales data. We were only able to obtain sales data for the Adidas brand, and even for Adidas, the data was limited to the years 2020 and 2021. This limited our ability to perform comprehensive analysis and correlations across multiple brands and years.
+            
+            - **Misalignment of Review and Sales Data**: Another challenge was the misalignment of review and sales data. While we had review data spanning multiple years, the available sales data was limited to 2020 and 2021. This made it difficult to correlate sales trends with consumer sentiment accurately.
+            
+            - **Other Considerations**: Additionally, we encountered other minor challenges such as data preprocessing, handling missing values, and ensuring the accuracy of sentiment analysis results. However, through careful data processing and analysis, we were able to mitigate these challenges to some extent.
         """)
 
-        # Conclusions for Brand Analysis Page
-        st.subheader('Conclusions:')
-        st.write("""
-        The brand analysis page provides focused insights into a specific brand's customer sentiment, stock performance, and ratings trends over time. Users can use these insights to assess brand competitiveness, customer satisfaction, and market positioning.
-        """)
+        
 
     elif page == 'Analysis Page':
         st.header('Analysis Page')
