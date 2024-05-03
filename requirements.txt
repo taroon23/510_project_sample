@@ -5,6 +5,5 @@ scikit-learn
 openpyxl
 wordcloud
 bs4
-os
 serpapi
 dotenv
