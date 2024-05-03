@@ -162,21 +162,23 @@ def generate_line_graph(data, selected_brand, selected_year):
     #fig = plt.gcf()
 
 
-def generate_dual_coloured_scatter(data, selected_brand):
+def generate_dual_coloured_scatter(selected_brand_data, selected_brand):
     # Plotting
-    plt.figure(figsize=(10, 6))
+    plt.figure(figsize=(12, 6))
 
     # Define colors based on sentiment
-    colors = data['Sentiment'].map({'Positive': 'blue', 'Negative': 'red'})
-
-    # Replace NaN values with a default color (e.g., black)
-    colors.fillna('black', inplace=True)
-
-    # Convert color names to RGBA format, skipping NaN values
-    color_list = [mcolors.to_rgba(color) for color in colors if not pd.isna(color)]
+    colors = selected_brand_data['Sentiment'].map({'Positive': 'blue', 'Negative': 'red', 'Neutral': 'gray'})
 
     # Scatter plot of Close price vs Date for Nike with colored points based on sentiment
-    plt.scatter(data['Date'], data['Close'], c=color_list, alpha=0.5)
+    plt.scatter(selected_brand_data['Date'], selected_brand_data['Close'], c=colors, alpha=0.7)
+
+    # Add legend
+    plt.legend(handles=[
+        plt.Line2D([0], [0], marker='o', color='w', markerfacecolor='blue', markersize=10, label='Positive Sentiment'),
+        plt.Line2D([0], [0], marker='o', color='w', markerfacecolor='red', markersize=10, label='Negative Sentiment'),
+        plt.Line2D([0], [0], marker='o', color='w', markerfacecolor='gray', markersize=10, label='Neutral Sentiment')
+    ], loc='upper left')
+
     plt.title(f'{selected_brand} Stock Price over Time')
     plt.xlabel('Date')
     plt.ylabel('Close Price')
