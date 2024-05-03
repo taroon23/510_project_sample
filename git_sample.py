@@ -306,6 +306,9 @@ def main():
             selected_stock_data = stock_data[(stock_data['Brand'] == selected_brand) & (stock_data['Date'].dt.year == selected_year)]
         else:
             selected_stock_data = stock_data[stock_data['Brand'] == selected_brand] 
+        
+        st.write("")
+        st.write("")
 
         # Display brand logo and calculate average price and ratings
         col1, col2 = st.columns(2)
@@ -328,6 +331,9 @@ def main():
             # Display average price and ratings
             st.markdown(f"<p style='text-align: center'><strong>Avg Price of Shoe:</strong> {avg_price:.2f}</p>", unsafe_allow_html=True)
             st.markdown(f"<p style='text-align: center'><strong>Avg Ratings:</strong> {avg_ratings:.2f}</p>", unsafe_allow_html=True)
+
+        st.write("")
+        st.write("")
 
         # Generate pie chart
         st.subheader(f"Sentiment Analysis for {selected_brand}")
