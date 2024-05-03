@@ -321,6 +321,7 @@ def main():
             sales_data_year = adidas_sales_selected_year.groupby('Date').agg({
                 'Total Sales': 'sum',
                 'Units Sold': 'sum',
+                'Price per Unit': 'avg',
                 'Operating Profit': 'sum'
             }).reset_index()
 
