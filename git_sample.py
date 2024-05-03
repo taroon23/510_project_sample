@@ -336,18 +336,8 @@ def main():
         col1, col2 = st.columns(2)
 
         with col1:
-
-            # Calculate average price and ratings
-            avg_price = selected_brand_data['Price'].mean()
-            avg_ratings = selected_brand_data['Ratings'].mean()
-
-            # Display blank lines for vertical centering
-            for _ in range(4):
-                st.write("")
-
-            # Display average price and ratings
-            st.markdown(f"<p style='text-align: center'><strong>Avg Price of Shoe:</strong> {avg_price:.2f}</p>", unsafe_allow_html=True)
-            st.markdown(f"<p style='text-align: center'><strong>Avg Ratings:</strong> {avg_ratings:.2f}</p>", unsafe_allow_html=True)
+            st.write("")
+            
             
         with col2:
            
@@ -364,20 +354,7 @@ def main():
             st.image(get_brand_logo(selected_brand), use_column_width='auto')
 
         with col2:
-            # Calculate average price and ratings
-            avg_price = selected_brand_data['Price'].mean()
-            avg_ratings = selected_brand_data['Ratings'].mean()
-
-            # Calculate the number of blank lines needed for vertical centering
-            num_blank_lines = st.empty()
-
-            # Display blank lines for vertical centering
-            for _ in range(4):
-                st.write("")
-
-            # Display average price and ratings
-            st.markdown(f"<p style='text-align: center'><strong>Avg Price of Shoe:</strong> {avg_price:.2f}</p>", unsafe_allow_html=True)
-            st.markdown(f"<p style='text-align: center'><strong>Avg Ratings:</strong> {avg_ratings:.2f}</p>", unsafe_allow_html=True)
+            st.write("")
 
         st.write("")
         st.write("")
