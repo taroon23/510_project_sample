@@ -8,6 +8,7 @@ nltk.download('vader_lexicon')
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from matplotlib.dates import MonthLocator
 from sklearn.preprocessing import MinMaxScaler
+import matplotlib.colors as mcolors
 
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
@@ -161,19 +162,27 @@ def generate_line_graph(data, selected_brand, selected_year):
     #fig = plt.gcf()
 
 
-# Function to generate line graph of Ratings Over Time
-def generate_line_plot_ratings(data, selected_brand, selected_year):
+def generate_dual_coloured_scatter(data, selected_brand):
+    # Plotting
     plt.figure(figsize=(10, 6))
-    sns.lineplot(x='Date', y='Ratings', data=data)
+
+    # Define colors based on sentiment
+    colors = data['Sentiment'].map({'Positive': 'blue', 'Negative': 'red'})
+
+    # Replace NaN values with a default color (e.g., black)
+    colors.fillna('black', inplace=True)
+
+    # Convert color names to RGBA format, skipping NaN values
+    color_list = [mcolors.to_rgba(color) for color in colors if not pd.isna(color)]
+
+    # Scatter plot of Close price vs Date for Nike with colored points based on sentiment
+    plt.scatter(data['Date'], data['Close'], c=color_list, alpha=0.5)
+    plt.title(f'{selected_brand} Stock Price over Time')
     plt.xlabel('Date')
-    plt.ylabel('Ratings')
-    plt.title(f'Ratings Over Time for {selected_brand} in {selected_year}')
-    plt.xticks(rotation=45)
-    # Set x-axis interval to months
-    plt.gca().xaxis.set_major_locator(MonthLocator())
-    st.pyplot()
-
-
+    plt.ylabel('Close Price')
+    plt.grid(True)
+    plt.tight_layout()
+    st.pyplot(plt)
 
 
 def generate_dual_line_graph_rescaled(data, selected_brand, selected_year):
@@ -553,10 +562,10 @@ def main():
         st.write("")
         st.write("")
 
-        # Generate line plot of Ratings Over Time
-        st.subheader(f"Ratings Over Time for {selected_brand} in {selected_year}")
+        # Generate Dual Coloured Scatter plot
+        st.subheader(f"Impact of Sensitivity on {selected_brand} Stock price")
         st.write("")
-        generate_line_plot_ratings(selected_brand_data, selected_brand, selected_year)
+        generate_dual_coloured_scatter(selected_brand_data, selected_brand)
 
         st.write("")
         st.write("")
