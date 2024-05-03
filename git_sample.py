@@ -386,6 +386,8 @@ def main():
         st.write("")
         st.write("")
 
+        st.subheader(f"Demographic Analysis: Statewise")
+
         # Display brand logo and calculate average price and ratings
         col1, col2 = st.columns(2)
 
@@ -435,21 +437,12 @@ def main():
         fig_lg = generate_adidas_line_graph(line_adidas_sales_filtered, line_selected_state, line_selected_year)
         st.pyplot(fig_lg)
 
-        # Display brand logo and calculate average price and ratings
-        col1, col2 = st.columns(2)
-
-        with col1:
-            st.write("")
-            
-            
-        with col2:
-           
-            st.image(get_brand_logo(selected_brand), use_column_width='auto')
- 
-
+        st.write("")
         st.write("")
         st.write("")
 
+        st.subheader(f"Trend Analysis: Does Units Sold have an impact on Stock Price")
+        st.write("")
         generate_adidas_double_line_graph(adidas_stock_analysis_data)
 
 
