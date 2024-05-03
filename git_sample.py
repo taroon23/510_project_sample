@@ -320,7 +320,8 @@ def main():
 
 
             available_years = [2020, 2021]
-            selected_year = st.selectbox("Select Year", available_years)
+            selected_year = st.selectbox("Select Year", available_years, format_func=lambda x: f"<span style='font-size: 12px'>{x}</span>")
+
 
             # Filter the adidas_sales DataFrame based on the selected year
             adidas_sales_selected_year = adidas_sales[adidas_sales['Date'].dt.year == selected_year]
