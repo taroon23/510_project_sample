@@ -409,8 +409,17 @@ def main():
         col2.write(f"<p style='text-align: center'><strong>Overall Profit:</strong> {line_overall_profit_formatted}</p>", unsafe_allow_html=True)
 
         # Display a line graph of total sales for every month for the selected state and year
-        st.subheader(f"Total Sales for {line_selected_state if line_selected_state != 'All States' else 'All States'} in {line_selected_year if line_selected_year != 'All Years' else 'All Years'}")
-        st.line_chart(line_sales_data_month.set_index('Date'))
+
+        plt.figure(figsize=(10, 6))
+        sns.lineplot(x='Date', y='Total Sales', data=line_adidas_sales_filtered)
+        plt.xlabel('Date')
+        plt.ylabel('Total Sales')
+        plt.title(f'Total Sales for {line_selected_state} in {line_selected_year}')
+        plt.xticks(rotation=45)
+        # Set x-axis interval to months
+        plt.gca().xaxis.set_major_locator(MonthLocator())
+        # Get the current figure and pass it to st.pyplot()   
+        st.set_option('deprecation.showPyplotGlobalUse', False)
 
 
     elif page == 'Overall Analysis Page':
