@@ -294,14 +294,11 @@ def main():
     page = st.sidebar.radio("Navigate", ['Main', 'Analysis Page', 'Adidas Analysis Page', 'Overall Analysis Page'])
 
     if page == 'Main':
-        
-        # Main Project Page
-        st.title("Main Project Page")
 
         st.header('7401376800')
 
         # 2. How to Use the WebApp:
-        st.header("2. How to Use the WebApp:")
+        st.header("How to Use the WebApp:")
 
         st.markdown("""
             The features of this application:
@@ -316,7 +313,7 @@ def main():
         """)
 
         # 3. Major "Gotchas":
-        st.header("3. Major 'Gotchas':")
+        st.header("Major 'Gotchas':")
 
         st.markdown("""
             - **Limited Sales Data**: One major limitation of the project was the availability of sales data. We were only able to obtain sales data for the Adidas brand, and even for Adidas, the data was limited to the years 2020 and 2021. This limited our ability to perform comprehensive analysis and correlations across multiple brands and years.
