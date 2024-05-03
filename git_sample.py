@@ -17,26 +17,336 @@ from nltk.corpus import wordnet
 from nltk.stem.wordnet import WordNetLemmatizer
 from wordcloud import WordCloud
 
+import os
+import serpapi
+from dotenv import load_dotenv
+
+import requests
+from bs4 import BeautifulSoup
+import csv
+from datetime import datetime
+import time
+
 # Download NLTK resources
 nltk.download('punkt')
 nltk.download('stopwords')
 nltk.download('wordnet')
 nltk.download('averaged_perceptron_tagger')
 
+#Scraping Amazon Data
+def get_amazon_data_function():
+    amazon_request_data = {
+        "authority": "www.amazon.com",
+        "method": "GET",
+        "path": "/s?k=shoes&crid=2BK2NPYYMOA0Y&sprefix=shoes%2Caps%2C139&ref=nb_sb_noss_1",
+        "scheme": "https",
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+        "Accept-Encoding": "gzip, deflate, br, zstd",
+        "Accept-Language": "en-US,en;q=0.9",
+        "Cookie": "session-id=142-2984597-2384856; session-id-time=2082787201l; i18n-prefs=USD; ubid-main=130-4009680-2230565; session-token=H3InKS3swF5MqPMQVkPBFyVppkwfhvbeDwX3XjfISxUN5UX+pVQCYPIKV8AygjfSQqb29gs16H27541vpvu/EyjS+ikwstm2jvhY32F98M/aEbZsU+jgKQFr2gBf3Z4BPwAKTsB+bh0wjMkjhpXpiHLKNXj4kvSAQj1iheuDsPzYqzz+LTU7LbyOtF8AjykDB1ZlizUwsIkidW6yMbRAo+JfbR2JcVgMfDPA2v5rkkWJPMNd+uK/Xk4BZ/8WFK1se9+aoB9cAzIQexlfNNPLD3khcjUNI0SwoDkzalaekZa+WmmOmSo9iTXochPZjRDvIF1T3NYNqGAu22G+sSLsUFp0ye0gcQEr; JSESSIONID=E378761678CC34E66F03CBD470884431; csm-hit=tb:s-33FGFH4QX9293JJ11SY3|1712629669705&t:1712629673488&adb:adblk_no",
+        "Device-Memory": "8",
+        "Downlink": "10",
+        "Dpr": "1.25",
+        "Ect": "4g",
+        "Rtt": "50",
+        "Sec-Ch-Device-Memory": "8",
+        "Sec-Ch-Dpr": "1.25",
+        "Sec-Ch-Ua": "\"Google Chrome\";v=\"123\", \"Not:A-Brand\";v=\"8\", \"Chromium\";v=\"123\"",
+        "Sec-Ch-Ua-Mobile": "?0",
+        "Sec-Ch-Ua-Platform": "\"Windows\"",
+        "Sec-Ch-Ua-Platform-Version": "\"15.0.0\"",
+        "Sec-Ch-Viewport-Width": "682",
+        "Sec-Fetch-Dest": "document",
+        "Sec-Fetch-Mode": "navigate",
+        "Sec-Fetch-Site": "none",
+        "Sec-Fetch-User": "?1",
+        "Upgrade-Insecure-Requests": "1",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36",
+        "Viewport-Width": "682"
+    }
+
+    def amazon_scrape_page(url):
+        response = requests.get(url, headers=amazon_request_data)
+        soup = BeautifulSoup(response.content, 'html.parser')
+
+        with open('amazon_review_websites.csv', 'a', newline='', encoding='utf-8') as csvfile:
+            fieldnames = ['Brand', 'Shoe Name', 'Review Website']
+            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+
+            if csvfile.tell() == 0:
+                writer.writeheader()
+
+            div_elements = soup.find_all('div', class_='a-section a-spacing-small puis-padding-left-micro puis-padding-right-micro')
+            for div_element in div_elements:
+                specific_brand_element = div_element.find('span', class_='a-size-base-plus a-color-base')
+                brand = specific_brand_element.get_text()        
+
+                specific_shoe_element = div_element.find('span', class_='a-size-base-plus a-color-base a-text-normal')
+                shoe_name = specific_shoe_element.get_text()
+
+                specific_review_element = div_element.find('a', class_='a-link-normal s-underline-text s-underline-link-text s-link-style')
+                if specific_review_element:
+                    shoe_review_link = 'https://www.amazon.com/' + specific_review_element['href']
+                else:
+                    shoe_review_link = ''  # or any other default value
+              
+                writer.writerow({'Brand': brand, 'Shoe Name': shoe_name, 'Review Website': shoe_review_link})
+
+    def amazon_get_next_page_url(url):
+        response = requests.get(url, headers=amazon_request_data)
+        soup = BeautifulSoup(response.content, 'html.parser')
+        
+        next_page_element = soup.find('div', class_='a-section a-text-center s-pagination-container')
+        if next_page_element:
+            next_page_link_element = next_page_element.find('a')
+            next_page_link = 'https://www.amazon.com/' + next_page_link_element.get('href')
+            return next_page_link
+        else:
+            return None
+
+    def amazon_scrape_multiple_pages(current_url,num_pages):
+        current_url = amazon_base_url
+        for _ in range(num_pages):
+            amazon_scrape_page(current_url)
+            next_page_url = amazon_get_next_page_url(current_url)
+            if next_page_url:
+                current_url = next_page_url
+            else:
+                break
+            time.sleep(2)
+
+    amazon_base_url = "https://www.amazon.com/s?k=shoes&i=fashion&rh=n%3A7141123011%2Cp_123%3A198664%7C234394%7C234502%7C256097%7C6832&dc&crid=PYFEZT5KCGKW&qid=1713488827&rnid=85457740011&sprefix=shoes%2Caps%2C165&ref=sr_nr_p_123_18&ds=v1%3AoZI0FyyIC2VbanXgXbIcp5RsGpGpkJmAIgcp2rdeV2E"
+    amazon_num_pages = 5
+
+    amazon_scrape_multiple_pages(amazon_base_url, amazon_num_pages)
+
+    amazon_review_website_path = 'amazon_review_websites.csv'
+    amazon_review_website_data = pd.read_csv(amazon_review_website_path)
+
+    amazon_review_website_data = amazon_review_website_data.drop(columns=['Shoe Name'])
+    amazon_review_website_data['Brand'] = amazon_review_website_data['Brand'].replace({'PUMA GOLF': 'PUMA', 'adidas': 'Adidas'})
+
+    amazon_brands = amazon_review_website_data['Brand'].unique().tolist()
+    amazon_brand_data = {}
+    amazon_review_websites_by_brand = {}
+
+    for brand_name in amazon_brands:
+        amazon_brand_data[brand_name] = amazon_review_website_data[amazon_review_website_data['Brand'] == brand_name]
+        
+    for brand_name, brand_df in amazon_brand_data.items():
+        amazon_review_websites = brand_df['Review Website'].tolist()
+        amazon_review_websites_by_brand[brand_name] = amazon_review_websites
+
+    def amazon_scrape_review(brand, url, id_initiator):
+        shoe_ID = id_initiator
+        review_response = requests.get(url, headers=amazon_request_data)
+        soup = BeautifulSoup(review_response.content, 'html.parser')
+        
+        ratings = soup.find('span', class_='a-size-base a-color-base').text
+
+        price = soup.find('span', class_='a-offscreen')
+        if price:
+            price_text = price.text.strip()  
+            price_without_dollar = price_text.replace('$', '')
+            if price_without_dollar:  
+                price_float = float(price_without_dollar)
+            else:
+                price_float = np.nan
+        else:
+            price_float = np.nan
+
+        review_list_div = soup.find('div', id='cm-cr-dp-review-list')
+        
+        if review_list_div:
+            review_divs = review_list_div.find_all('div', class_='a-section review aok-relative')
+            for review_div in review_divs:
+                date_stuff_div = review_div.find('span', class_='a-size-base a-color-secondary review-date').text
+                date_str = date_stuff_div.split("on ")[1]
+                parsed_date = datetime.strptime(date_str, "%B %d, %Y")
+                formatted_date = parsed_date.strftime("%Y-%m-%d")
+                
+                review_text_div = review_div.find('div', class_='a-expander-content reviewText review-text-content a-expander-partial-collapse-content')
+                if review_text_div:
+                    review = review_text_div.text.strip()
+                    with open('amazon_data.csv', 'a', newline='', encoding='utf-8') as csvfile:
+                        fieldnames = ['Brand Name', 'Shoe_ID', 'Price', 'Date', 'Ratings', 'Review']
+                        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+                        writer.writerow({'Brand Name': brand, 'Shoe_ID': shoe_ID, 'Price': price_float, 'Date': formatted_date, 'Ratings': ratings, 'Review': review})
+                else:
+                    print("No review text found.")
+    
+    id_initiator = 1
+
+    for brand_name in amazon_brands:
+        for url in amazon_review_websites_by_brand[brand_name]:
+            if id_initiator > 240:
+                break  # Break out of the loop if id_initiator exceeds 240 for now
+            amazon_scrape_review(brand_name, url, id_initiator)
+            id_initiator = id_initiator + 1
+
+#Function to get data using Google Shopping API
+def get_google_data_function():
+    google_api_key = os.getenv('SERPAPI_KEY')
+    google_client = serpapi.Client(api_key= google_api_key)
+
+    google_result = google_client.search({
+        'engine': 'google_shopping',
+        'q': 'men shoes',
+        'tbs': 'mr:1,pdtr0:871889%7C872459!872292!871894!872392!872337'
+    })
+
+    google_review_website = [(item["title"], item["product_link"], item["extracted_price"]) for item in google_result["shopping_results"]]
+
+    google_review_website_data = pd.DataFrame(google_review_website, columns=["title", "link", "price"])
+
+    google_review_website_data['link'] = google_review_website_data['link'].str.replace('?gl=us', '/reviews?gl=us')
+
+    keywords = ['Under Armour', 'Skechers', 'Puma', 'Adidas', 'Nike']
+
+    google_review_website_data['Brand'] = np.select(
+        [google_review_website_data['title'].str.contains(keyword) for keyword in keywords],
+        keywords,
+        default='NNN'
+    )
+
+    google_review_website_data = google_review_website_data[google_review_website_data['Brand'] != 'NNN']
+    google_request_info = {
+        "authority": "www.google.com",
+        "method": "GET",
+        "path": "/shopping/product/14880183997873103222/reviews?gl=us",
+        "scheme": "https",
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+        "Accept-Encoding": "gzip, deflate, br, zstd",
+        "Accept-Language": "en-US,en;q=0.9",
+        "Sec-Ch-Ua": '"Google Chrome";v="123", "Not:A-Brand";v="8", "Chromium";v="123"',
+        "Sec-Ch-Ua-Arch": "x86",
+        "Sec-Ch-Ua-Bitness": '"64"',
+        "Sec-Ch-Ua-Full-Version-List": '"Google Chrome";v="123.0.6312.122", "Not:A-Brand";v="8.0.0.0", "Chromium";v="123.0.6312.122"',
+        "Sec-Ch-Ua-Mobile": "?0",
+        "Sec-Ch-Ua-Model": '""',
+        "Sec-Ch-Ua-Platform": '"Windows"',
+        "Sec-Ch-Ua-Platform-Version": '"15.0.0"',
+        "Sec-Ch-Ua-Wow64": "?0",
+        "Sec-Fetch-Dest": "document",
+        "Sec-Fetch-Mode": "navigate",
+        "Sec-Fetch-Site": "none",
+        "Sec-Fetch-User": "?1",
+        "Upgrade-Insecure-Requests": "1",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36"
+    }
+
+    google_brands = ['Under Armour', 'Skechers', 'Puma', 'Adidas', 'Nike']
+
+    google_brand_data = {}
+    google_review_data_by_brand = {}
+
+    for brand_name in google_brands:
+        google_brand_data[brand_name] = google_review_website_data[google_review_website_data['Brand'] == brand_name]
+
+    for brand_name, brand_df in google_brand_data.items():
+        review_data = {'link': brand_df['link'].tolist(), 'price': brand_df['price'].tolist()}
+        google_review_data_by_brand[brand_name] = review_data
+
+    def google_scrape_review(brand, url, price, id_initiator):
+        price_without_dollar = price
+        price_float = float(price_without_dollar)
+
+        shoe_ID = id_initiator
+
+        review_response = requests.get(url, headers=google_request_info)
+        soup = BeautifulSoup(review_response.content, 'html.parser')
+
+        ratings_div = soup.find('div', class_='uYNZm')
+
+        if ratings_div:  
+            ratings = ratings_div.text.strip()
+        else:
+            ratings = np.nan
+
+        review_divs = soup.find_all('div', class_='z6XoBf fade-in-animate')
+
+        for review_div in review_divs:
+            review_text_div = review_div.find('div', class_='g1lvWe')
+
+            if review_text_div:
+                date_stuff_div = review_div.find('span', class_='less-spaced ff3bE nMkOOb').text
+
+                parsed_date = datetime.strptime(date_stuff_div, "%B %d, %Y")
+
+                formatted_date = parsed_date.strftime("%Y-%m-%d")
+
+                review = review_text_div.text.strip()
+
+                with open('google_data.csv', 'a', newline='', encoding='utf-8') as csvfile:
+                    fieldnames = ['Brand Name', 'Shoe_ID', 'Price', 'Date', 'Ratings', 'Review']
+                    writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+                    writer.writerow({'Brand Name': brand, 'Shoe_ID': shoe_ID, 'Price': price_float, 'Date': formatted_date, 'Ratings': ratings, 'Review': review})
+
+            else:
+                print("No review text found.")
+
+    id_initiator = 1
+
+    for brand_name in google_brands:
+        review_data = google_review_data_by_brand[brand_name]
+        for url, price in zip(review_data['link'], review_data['price']):
+            if id_initiator > 240:
+                break
+            google_scrape_review(brand_name, url, price, id_initiator)
+            id_initiator = id_initiator + 1
+
+#Function to get Yahoo Finance Stock Data
+def get_stock_data_function():
+    tickers = ['ADDYY', 'NKE', 'SKX', 'UAA', 'PUM.DE']
+    brand_mapping = {'ADDYY': 'Adidas', 'NKE': 'Nike', 'SKX': 'Skechers', 'UAA': 'Under Armour', 'PUM.DE': 'Puma'}
+    stock_dfs = []
+    for ticker in tickers:
+        query_string = f"https://query1.finance.yahoo.com/v7/finance/download/{ticker}?period1=1464739200&period2=1714351190&interval=1d&events=history&includeAdjustedClose=true"
+        stock_df = pd.read_csv(query_string)
+        stock_df['Ticker'] = ticker
+        stock_df['Brand'] = brand_mapping[ticker]
+        stock_dfs.append(stock_df)
+    stock_data = pd.concat(stock_dfs, ignore_index=True)
+
+    # Define the file path
+    stock_csv_file_path = 'stock_data.csv'
+
+    # Save the DataFrame to a CSV file with headers
+    stock_data.to_csv(stock_csv_file_path, index=False)
 # Function to load data
+
 def load_data():
     
-    # Read the data files
-    amazon_data = pd.read_csv('amazon_data123.csv', names=['Brand', 'Shoe_ID', 'Price', 'Date', 'Ratings', 'Review'])
+    # Read the amazon data files
+    amazon_data_file_path = 'amazon_data123.csv'
+
+    # Check if the file exists
+    if not os.path.isfile(amazon_data_file_path):
+        get_amazon_data_function()
+    else:
+        # Read the CSV file into a pandas DataFrame with headers
+        amazon_data = pd.read_csv(amazon_data_file_path, names=['Brand', 'Shoe_ID', 'Price', 'Date', 'Ratings', 'Review'])
     
     # Adding '10' before every value in the 'Shoe_ID' column
     amazon_data['Shoe_ID'] = '10' + amazon_data['Shoe_ID'].astype(str)
 
-    google_data = pd.read_csv('google_data321.csv', names=['Brand', 'Shoe_ID', 'Price', 'Date', 'Ratings', 'Review'])
+    
+    
+    # Read the google data files
+    google_data_file_path = 'google_data321.csv'
+
+    # Check if the file exists
+    if not os.path.isfile(google_data_file_path):
+        get_google_data_function()
+    else:
+        # Read the CSV file into a pandas DataFrame with headers
+        google_data = pd.read_csv(google_data_file_path, names=['Brand', 'Shoe_ID', 'Price', 'Date', 'Ratings', 'Review'])
 
     # Adding '10' before every value in the 'Shoe_ID' column
     google_data['Shoe_ID'] = '20' + google_data['Shoe_ID'].astype(str)
 
+    
+    
     # Concatenate Amazon and Google data
     amazon_google_data = pd.concat([amazon_data, google_data], ignore_index=True)
 
@@ -52,7 +362,15 @@ def load_data():
     # Rename the column 'Invoice Date' to 'Date'
     adidas_sales = adidas_sales.rename(columns={'Invoice Date': 'Date'})
 
-    stock_data = pd.read_csv('stock_data.csv')
+    # Read the amazon data files
+    stock_data_file_path = 'stock_data.csv'
+
+    # Check if the file exists
+    if not os.path.isfile(stock_data_file_path):
+        get_stock_data_function()
+    else:
+        # Read the CSV file into a pandas DataFrame with headers
+        stock_data = pd.read_csv(stock_data_file_path)
 
     # Merge stock data with review data
     combined_data = pd.merge(amazon_google_data, stock_data[['Date', 'Close', 'Brand']], on=['Date', 'Brand'], how='left')
