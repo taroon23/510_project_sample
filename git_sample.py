@@ -323,7 +323,7 @@ def main():
 
             # Display blank lines for vertical centering
             for _ in range(2):
-                num_blank_lines.text('')
+                st.write("")
 
             # Display average price and ratings
             st.markdown(f"<p style='text-align: center'><strong>Avg Price of Shoe:</strong> {avg_price:.2f}</p>", unsafe_allow_html=True)
