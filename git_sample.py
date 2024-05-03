@@ -199,6 +199,32 @@ def generate_dual_line_graph_rescaled(data, selected_brand, selected_year):
     plt.legend()
     st.pyplot()
 
+def generate_adidas_double_line_graph(data):
+    # Initialize the MinMaxScaler
+    scaler = MinMaxScaler()
+
+    adidas_stock_analysis_data_2021 = data[adidas_stock_analysis_data['Date'].dt.year == 2021]
+
+    # Scale and normalize the 'Total Sales' and 'Close' columns
+    scaled_sales = scaler.fit_transform(adidas_stock_analysis_data_2021[['Units Sold']])
+    scaled_close = scaler.fit_transform(adidas_stock_analysis_data_2021[['Close']])
+
+    # Create a new DataFrame with the scaled values
+    scaled_df = pd.DataFrame({'Date': adidas_stock_analysis_data_2021['Date'],
+                            'Scaled Units Sold': scaled_sales.flatten(),
+                            'Scaled Close': scaled_close.flatten()})
+
+    # Plot the scaled total sales and close price
+    plt.figure(figsize=(10, 6))
+    plt.plot(scaled_df['Date'], scaled_df['Scaled Units Sold'], label='Scaled Units Sold', color='blue')
+    plt.plot(scaled_df['Date'], scaled_df['Scaled Close'], label='Scaled Close Price', color='red')
+
+    plt.xlabel('Date')
+    plt.ylabel('Scaled Value')
+    plt.title('Scaled Units Sold vs Scaled Close Price Over Time')
+    plt.legend()
+    st.pyplot(plt)
+
 def generate_adidas_line_graph(line_adidas_sales_filtered, line_selected_state, line_selected_year):
     plt.figure(figsize=(10, 6))
     sns.lineplot(x='Date', y='Total Sales', data=line_adidas_sales_filtered)
@@ -363,21 +389,6 @@ def main():
         # Display brand logo and calculate average price and ratings
         col1, col2 = st.columns(2)
 
-        with col1:
-            st.write("")
-            
-            
-        with col2:
-           
-            st.image(get_brand_logo(selected_brand), use_column_width='auto')
- 
-
-        st.write("")
-        st.write("")
-
-        # Display brand logo and calculate average price and ratings
-        col1, col2 = st.columns(2)
-
         # Dropdown for selecting the state
         line_selected_state = col1.selectbox("Select State", ['All States'] + list(adidas_sales['State'].unique()))
 
@@ -423,6 +434,24 @@ def main():
         # Display a line graph of total sales for every month for the selected state and year
         fig_lg = generate_adidas_line_graph(line_adidas_sales_filtered, line_selected_state, line_selected_year)
         st.pyplot(fig_lg)
+
+        # Display brand logo and calculate average price and ratings
+        col1, col2 = st.columns(2)
+
+        with col1:
+            st.write("")
+            
+            
+        with col2:
+           
+            st.image(get_brand_logo(selected_brand), use_column_width='auto')
+ 
+
+        st.write("")
+        st.write("")
+
+        generate_adidas_double_line_graph(adidas_stock_analysis_data)
+
 
     elif page == 'Overall Analysis Page':
         st.header('Overall Analysis of all brands')
