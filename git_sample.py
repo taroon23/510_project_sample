@@ -307,18 +307,6 @@ def main():
             st.image(get_brand_logo(selected_brand), use_column_width='auto')
 
         with col2:
-            
-            '''
-            # Calculate Adidas Statistics
-            selected_brand_data = stock_analysis_data[stock_analysis_data['Brand'] == 'Adidas']
-            avg_price = selected_brand_data['Price'].mean()
-            avg_ratings = selected_brand_data['Ratings'].mean()
-
-            # Display blank lines for vertical centering
-            st.write("")
-            st.markdown(f"<p style='text-align: center'><strong>Avg Price of Shoe:</strong> {avg_price:.2f}</p>", unsafe_allow_html=True)
-            st.markdown(f"<p style='text-align: center'><strong>Avg Ratings:</strong> {avg_ratings:.1f}</p>", unsafe_allow_html=True)
-            '''
 
             available_years = [2020, 2021]
             selected_year = st.selectbox("Select Year", available_years)
