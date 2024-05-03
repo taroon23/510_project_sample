@@ -327,17 +327,20 @@ def main():
             # Calculate the overall operating profit
             overall_operating_profit = sales_data_year['Operating Profit'].sum()
 
+            avg_price = sales_data_year['Price per Unit'].mean()
+
+
             # Calculate Adidas Statistics
             selected_brand_data = stock_analysis_data[(stock_analysis_data['Brand'] == 'Adidas') & (stock_analysis_data['Date'].dt.year == selected_year)]
-            avg_price = selected_brand_data['Price'].mean()
-            avg_ratings = selected_brand_data['Ratings'].mean()
+            #avg_price = selected_brand_data['Price'].mean()
+            #avg_ratings = selected_brand_data['Ratings'].mean()
 
             # Display the stats
             st.markdown(f"<p style='text-align: center'><strong>Total Sales:</strong> {sales_data_year['Total Sales'].sum():.2f}</p>", unsafe_allow_html=True)
             st.markdown(f"<p style='text-align: center'><strong>Units sold:</strong> {sales_data_year['Units Sold'].sum():.2f}</p>", unsafe_allow_html=True)
             st.markdown(f"<p style='text-align: center'><strong>Overall Profit:</strong> {overall_operating_profit:.2f}</p>", unsafe_allow_html=True)
             st.markdown(f"<p style='text-align: center'><strong>Avg Price of Shoe:</strong> {avg_price:.2f}</p>", unsafe_allow_html=True)
-            st.markdown(f"<p style='text-align: center'><strong>Avg Ratings:</strong> {avg_ratings:.1f}</p>", unsafe_allow_html=True)
+            #st.markdown(f"<p style='text-align: center'><strong>Avg Ratings:</strong> {avg_ratings:.1f}</p>", unsafe_allow_html=True)
 
         st.write("")
         st.write("")
