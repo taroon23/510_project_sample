@@ -19,7 +19,6 @@ from wordcloud import WordCloud
 
 import os
 import serpapi
-from dotenv import load_dotenv
 
 import requests
 from bs4 import BeautifulSoup
@@ -186,7 +185,7 @@ def get_amazon_data_function():
 
 #Function to get data using Google Shopping API
 def get_google_data_function():
-    google_api_key = os.getenv('SERPAPI_KEY')
+    google_api_key = "c5834b9bf92b1098a81b551eac79a501bf105e1c831699cb4058ffd97376d51d"
     google_client = serpapi.Client(api_key= google_api_key)
 
     google_result = google_client.search({
