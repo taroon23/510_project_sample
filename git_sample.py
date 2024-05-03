@@ -331,7 +331,7 @@ def main():
         st.header('What did you set out to study?')
         st.write("Initially, the project aimed to conduct sentiment analysis on consumer behavior using social media data from Twitter, product reviews from Amazon, and user-generated content from Reddit. However, the project evolved due to two main reasons:")
 
-        st.subheader('Change in Data Diversity:')
+        st.write("**Change in Data Diversity:**")
         st.write("- Originally, all three data sources primarily consisted of review data, limiting insights.")
         st.write("- With project expansion, sales and stock data were incorporated for a more comprehensive analysis.")
 
@@ -340,9 +340,9 @@ def main():
         st.write("- Diverse data sources were chosen to provide richer insights beyond sentiment analysis.")
 
         st.write("**How it Differs from the Original Plan:**")
-        st.write("**Diverse Data Types:** Transitioned from solely analyzing review data to incorporating sales and stock data.")
-        st.write("**Change in Data Sources:** Shifted from relying solely on the Twitter API to using publicly available data from platforms like Amazon and Yahoo Finance.")
-        st.write("**Enhanced Analysis Scope:** Expanded analysis beyond sentiment to include factors influencing consumer behavior and brand performance.")
+        st.write("- **Diverse Data Types:** Transitioned from solely analyzing review data to incorporating sales and stock data.")
+        st.write("- **Change in Data Sources:** Shifted from relying solely on the Twitter API to using publicly available data from platforms like Amazon and Yahoo Finance.")
+        st.write("- **Enhanced Analysis Scope:** Expanded analysis beyond sentiment to include factors influencing consumer behavior and brand performance.")
 
         st.header('What did you Discover/what were your conclusions?')
         st.write("The project evolved to incorporate additional data sources such as sales data and stock performance metrics alongside review data. This allowed for a more comprehensive analysis of consumer sentiment and brand performance. The conclusions drawn included insights into consumer sentiment trends, factors influencing sentiment, and opportunities for brands to enhance products, services, and marketing strategies based on feedback.")
