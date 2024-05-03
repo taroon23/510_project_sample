@@ -319,7 +319,7 @@ def main():
             avg_ratings = selected_brand_data['Ratings'].mean()
 
             # Calculate the number of blank lines needed for vertical centering
-            num_blank_lines = int((col2._width / st.text_input('', value='')._repr_html_().count('<br/>')) / 2)
+            num_blank_lines = int(st.text_input('', value='')._repr_html_().count('<br/>') / 2)
 
             # Display blank lines for vertical centering
             for _ in range(num_blank_lines):
