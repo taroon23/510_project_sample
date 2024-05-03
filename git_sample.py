@@ -401,6 +401,8 @@ def main():
         # Format overall profit in terms of K for thousands and M for millions
         line_overall_profit_formatted = f"${line_overall_profit/1000:.1f}K" if line_overall_profit < 1000000 else f"${line_overall_profit/1000000:.1f}M"
 
+        col2.write("")
+        col2.write("")
         # Display the total sales, units sold, and overall profit
         col2.write(f"<p style='text-align: center'><strong>Total Sales:</strong> {line_total_sales_formatted}</p>", unsafe_allow_html=True)
         col2.write(f"<p style='text-align: center'><strong>Units sold:</strong> {line_units_sold_formatted}</p>", unsafe_allow_html=True)
