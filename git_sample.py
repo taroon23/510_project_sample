@@ -308,15 +308,11 @@ def main():
 
         with col2:
 
-            # Calculate the number of blank lines needed for vertical centering
-            num_blank_lines = st.empty()
-
             # Display blank lines for vertical centering
             for _ in range(4):
                 st.write("")
 
-            available_years = [2020,2021]
-    
+            available_years = [2020, 2021]
             selected_year = st.selectbox("Select Year", available_years)
 
             # Filter the adidas_sales DataFrame based on the selected year
@@ -330,20 +326,17 @@ def main():
             }).reset_index()
 
             # Calculate the overall operating profit
-
-            total_adidas_sales = sales_data_year['Total Sales'].sum()
-            total_quantity_sold = sales_data_year['Units Sold'].sum()
             overall_operating_profit = sales_data_year['Operating Profit'].sum()
 
             # Calculate Adidas Statistics
+            selected_brand_data = stock_analysis_data[stock_analysis_data['Brand'] == 'Adidas']
             avg_price = selected_brand_data['Price'].mean()
-            avg_ratings = selected_brand_data['Ratings'].mean() 
+            avg_ratings = selected_brand_data['Ratings'].mean()
 
             # Display the stats
-            st.markdown(f"<p style='text-align: center'><strong>Total Sales:</strong> {total_adidas_sales:.2f}</p>", unsafe_allow_html=True)
-            st.markdown(f"<p style='text-align: center'><strong>Units sold:</strong> {total_quantity_sold:.2f}</p>", unsafe_allow_html=True)
+            st.markdown(f"<p style='text-align: center'><strong>Total Sales:</strong> {sales_data_year['Total Sales'].sum():.2f}</p>", unsafe_allow_html=True)
+            st.markdown(f"<p style='text-align: center'><strong>Units sold:</strong> {sales_data_year['Units Sold'].sum():.2f}</p>", unsafe_allow_html=True)
             st.markdown(f"<p style='text-align: center'><strong>Overall Profit:</strong> {overall_operating_profit:.2f}</p>", unsafe_allow_html=True)
-
             st.markdown(f"<p style='text-align: center'><strong>Avg Price of Shoe:</strong> {avg_price:.2f}</p>", unsafe_allow_html=True)
             st.markdown(f"<p style='text-align: center'><strong>Avg Ratings:</strong> {avg_ratings:.2f}</p>", unsafe_allow_html=True)
 
