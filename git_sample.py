@@ -393,12 +393,14 @@ def main():
         st.write("- **Significant Relationship:** A correlation analysis explored the relationship between units sold and the closing (stock) price of Adidas.")
         st.write("- **Visual Representation:** The correlation is visually depicted through a graph, showcasing how fluctuations in units sold correspond to changes in the close price of Adidas stock.")
 
-
         st.header('What difficulties did you have in completing the project?')
         st.write("Some difficulties encountered during the project included:")
         st.write("- Limited availability of sales data for multiple brands and recent timeframes, restricting the ability to perform comprehensive analysis across brands and time periods.")
         st.write("- Challenges in aligning review data with sales and stock data to derive meaningful correlations and insights.")
         st.write("- Initial reliance on paid APIs such as Twitter API, leading to a shift in data sources to obtain diverse data types.")
+
+        st.header('What skills did you wish you had while you were doing the project?')
+        st.write("I wish to have more advanced skills in data analysis and machine learning techniques. Especially, Machine Learning techniques that could have helped me with predictive analysis and more sophisticated data visualizations for deeper insights")
 
         st.header('What would you do “next” to expand or augment the project?')
         st.write("To expand the project further, the following steps could be taken:")
