@@ -340,13 +340,9 @@ def main():
         st.header('Explanation')
         
         st.header('What did you set out to study?')
-        st.write("Initially, the project aimed to conduct sentiment analysis on consumer behavior using social media data from Twitter, product reviews from Amazon, and user-generated content from Reddit. However, the project evolved due to two main reasons:")
+        st.write("Initially, the project aimed to conduct sentiment analysis on consumer behavior using social media data from Twitter, product reviews from Amazon, and user-generated content from Reddit. However, the project evolved due:")
 
-        st.write("**Change in Data Diversity:**")
         st.write("- Originally, all three data sources primarily consisted of review data, limiting insights.")
-        st.write("- With project expansion, sales and stock data were incorporated for a more comprehensive analysis.")
-
-        st.write("**Changes in Data Sources:**")
         st.write("- Originally planned Twitter API usage was altered due to limitations and costs.")
         st.write("- Diverse data sources were chosen to provide richer insights beyond sentiment analysis.")
 
@@ -406,8 +402,7 @@ def main():
         st.write("To expand the project further, the following steps could be taken:")
         st.write("- Obtain sales data for multiple brands in real-time or for recent timeframes to analyze the real-time performance of brands in the footwear industry.")
         st.write("- Incorporate additional data from social media platforms like Twitter and Reddit to capture public sentiment and discussions about brands, enabling a more comprehensive analysis of consumer behavior.")
-        st.write("- Implement advanced analytics techniques such as predictive modeling and clustering to identify patterns, trends, and anomalies in the data, leading to more actionable insights for brands.")
-        st.write("- Explore interactive visualization tools and dashboards to present the analysis results in an intuitive and user-friendly manner, facilitating easier interpretation and decision-making for stakeholders.")
+        st.write("- Implement advanced analytics techniques such as predictive modeling and clustering to identify patterns, trends leading to more actionable insights for brands.")
     
     elif page == 'Adidas Analysis Page':
         st.header('Overall Analysis of Adidas')
