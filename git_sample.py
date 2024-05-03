@@ -132,9 +132,6 @@ def generate_pie_chart(data, selected_brand):
     return fig
 
 
-
-
-
 # Function to generate line graph
 def generate_line_graph(data, selected_brand, selected_year):
     plt.figure(figsize=(10, 6))
@@ -229,6 +226,53 @@ def generate_dual_line_graph_rescaled(data, selected_brand, selected_year):
     plt.xticks(rotation=45)
     plt.legend()
     st.pyplot()
+
+def create_wordcloud(data, selected_brand):
+    # Define function to map POS tag to wordnet POS tag
+    def get_wordnet_pos(word):
+        tag = nltk.pos_tag([word])[0][1][0].upper()
+        tag_dict = {"J": wordnet.ADJ,
+                    "N": wordnet.NOUN,
+                    "V": wordnet.VERB,
+                    "R": wordnet.ADV}
+        return tag_dict.get(tag, wordnet.NOUN)
+    
+    # Assuming 'Selected_Brand' contains the selected brand name
+    word_analysis_data = data[data['Brand'] == selected_brand].copy()
+
+    # Tokenize, remove stopwords, and lemmatize the words in the 'Review' column
+    words = []
+    print(f"Word cloud for {brand}")
+    for review in word_analysis_data['Review']:
+        tokens = word_tokenize(review)  # Tokenize the review
+        words.extend(tokens)  # Extend the words list with tokens
+
+    # Lowercase all words
+    words = [w.lower() for w in words]
+
+    # Remove stopwords
+    stop_words = set(stopwords.words('english'))
+    stop_words.update(['shoe'])
+    words = [w for w in words if w not in stop_words]
+
+    # Remove punctuation
+    words = [w for w in words if w.isalnum()]
+
+    # Lemmatize words based on POS tags
+    lemmatizer = WordNetLemmatizer()
+    words = [lemmatizer.lemmatize(w, get_wordnet_pos(w)) for w in words]
+
+    # Create a single string of space separated words
+    unique_string = " ".join(words)
+
+    # Generate word cloud
+    wordcloud = WordCloud(width=800, height=400).generate(unique_string)
+
+    # Display the word cloud
+    plt.figure(figsize=(10, 5))
+    plt.imshow(wordcloud, interpolation='bilinear')
+    plt.axis('off')
+    plt.show()
 
 # Streamlit app
 def main():
@@ -337,8 +381,8 @@ def main():
                 st.write("")
 
             # Display average price and ratings
-            st.markdown(f"<p style='text-align: center'><strong>Avg Price of Shoe:</strong> {avg_price:.3f}</p>", unsafe_allow_html=True)
-            st.markdown(f"<p style='text-align: center'><strong>Avg Ratings:</strong> {avg_ratings:.3f}</p>", unsafe_allow_html=True)
+            st.markdown(f"<p style='text-align: center'><strong>Avg Price of Shoe:</strong> {avg_price:.2f}</p>", unsafe_allow_html=True)
+            st.markdown(f"<p style='text-align: center'><strong>Avg Ratings:</strong> {avg_ratings:.2f}</p>", unsafe_allow_html=True)
 
         st.write("")
         st.write("")
@@ -357,6 +401,15 @@ def main():
         st.write("")
         fig_lg = generate_line_graph(selected_stock_data, selected_brand, selected_year)
         st.pyplot(fig_lg)
+        
+        st.write("")
+        st.write("")
+
+        # Generate Wordcloud
+        st.subheader(f"Most commen words for {selected_brand}")
+        st.write("")
+        create_wordcloud(stock_analysis_data, selected_brand)
+        
         
         st.write("")
         st.write("")
