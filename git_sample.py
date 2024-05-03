@@ -291,7 +291,7 @@ def main():
     st.title("Analyzing Shoe Brands' Sentiment, Sales & Stock Performance'")
 
     # Page navigation
-    page = st.sidebar.radio("Navigate", ['Main', 'Analysis Page', 'Adidas Analysis Page', 'Overall Analysis Page'])
+    page = st.sidebar.radio("Navigate", ['Main Page', 'Explanation Page', 'Adidas Analysis Page', 'Overall Analysis Page'])
 
     if page == 'Main':
 
@@ -303,7 +303,7 @@ def main():
         st.markdown("""
             The features of this application:
 
-            - **Navigation**: Use the sidebar on the left to navigate between different pages: "Main", "Analysis Page", "Adidas Analysis Page", and "Overall Analysis Page".
+            - **Navigation**: Use the sidebar on the left to navigate between different pages: "Main Page", "Explanation Page", "Adidas Analysis Page", and "Overall Analysis Page".
             
             - **Analysis Pages**: The "Explanation Page" contains details on what the app is and its specifications and findings. The "Adidas Analysis Page" focuses specifically on analyzing Adidas's data, including sales, sentiment analysis, and stock performance. The "Overall Analysis Page" allows you to select a specific brand and year to explore sentiment analysis, stock performance, and other insights.
             
@@ -325,8 +325,8 @@ def main():
 
         
 
-    elif page == 'Analysis Page':
-        st.header('Analysis Page')
+    elif page == 'Explanation Page':
+        st.header('Explanation')
         
         
     
