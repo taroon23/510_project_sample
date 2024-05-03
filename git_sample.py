@@ -308,10 +308,12 @@ def main():
             selected_stock_data = stock_data[stock_data['Brand'] == selected_brand] 
 
         # Display brand logo and calculate average price and ratings
-        with st.beta_columns(2):
-            # Display brand logo
+        col1, col2 = st.columns(2)
+
+        with col1:
             st.image(get_brand_logo(selected_brand), use_column_width='auto')
 
+        with col2:
             # Calculate average price and ratings
             avg_price = selected_brand_data['Price'].mean()
             avg_ratings = selected_brand_data['Ratings'].mean()
@@ -319,6 +321,7 @@ def main():
             # Display average price and ratings
             st.write(f"Average Price: {avg_price}")
             st.write(f"Average Ratings: {avg_ratings}")
+
 
         # Display average price and ratings
         st.write(f"Avg Price of Shoe: {avg_price:.2f}")
