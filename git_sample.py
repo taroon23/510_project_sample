@@ -321,13 +321,29 @@ def main():
                 'Operating Profit': 'sum'
             }).reset_index()
 
-            # Calculate the overall operating profit
+            total_sales = sales_data_year['Total Sales'].sum()
+            units_sold = sales_data_year['Units Sold'].sum()
             overall_operating_profit = sales_data_year['Operating Profit'].sum()
 
+            # Function to convert numbers to K or M format
+            def format_number(number):
+                if number >= 1_000_000:
+                    return f"${number / 1_000_000:.1f}M"
+                elif number >= 1_000:
+                    return f"${number / 1_000:.0f}K"
+                else:
+                    return f"${number:.0f}"
+
+            # Convert total sales, units sold, and overall profit to K or M format
+            total_sales_formatted = format_number(total_sales)
+            units_sold_formatted = format_number(units_sold)
+            overall_operating_profit_formatted = format_number(overall_operating_profit)
+
             # Display the stats
-            st.markdown(f"<p style='text-align: center'><strong>Total Sales:</strong> {sales_data_year['Total Sales'].sum():.2f}</p>", unsafe_allow_html=True)
-            st.markdown(f"<p style='text-align: center'><strong>Units sold:</strong> {sales_data_year['Units Sold'].sum():.2f}</p>", unsafe_allow_html=True)
-            st.markdown(f"<p style='text-align: center'><strong>Overall Profit:</strong> {overall_operating_profit:.2f}</p>", unsafe_allow_html=True)
+            st.markdown(f"<p style='text-align: center'><strong>Total Sales:</strong> {total_sales_formatted}</p>", unsafe_allow_html=True)
+            st.markdown(f"<p style='text-align: center'><strong>Units sold:</strong> {units_sold_formatted}</p>", unsafe_allow_html=True)
+            st.markdown(f"<p style='text-align: center'><strong>Overall Profit:</strong> {overall_operating_profit_formatted}</p>", unsafe_allow_html=True)
+
 
         st.write("")
         st.write("")
