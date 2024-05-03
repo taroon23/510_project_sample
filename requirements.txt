@@ -6,3 +6,4 @@ openpyxl
 wordcloud
 bs4
 serpapi
+dotenv
