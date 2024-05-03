@@ -119,7 +119,7 @@ def get_brand_logo(selected_brand):
 def generate_pie_chart(data, selected_brand):
     sentiment_counts = data['Sentiment'].value_counts()
     fig, ax = plt.subplots()
-    ax.pie(sentiment_counts, labels=sentiment_counts.index, autopct='%1.1f%%', startangle=90, labeldistance=3.1)
+    ax.pie(sentiment_counts, labels=sentiment_counts.index, autopct='%1.1f%%', startangle=90, labeldistance=1.5)
     centre_circle = plt.Circle((0,0),0.70,fc='white')
     fig.gca().add_artist(centre_circle)
     ax.axis('equal')
